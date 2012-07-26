@@ -1,0 +1,81 @@
+\documentclass{article}
+
+\usepackage{pysnip}
+
+\setlength\parindent{0pt}
+\title{ PySnip Manual}
+\author{Andrea Censi}
+
+\newcommand{\cmd}[1]{\texttt{\textbackslash #1}}
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+PySnip is inspired by \texttt{python.sty} developed by James Brotchie.
+The workflow is different and it allows heavier jobs which are processed
+offline.
+
+
+\section{Installation}
+
+\begin{verbatim}
+    python setup.py develop
+\end{verbatim}
+
+\section{Basic use}
+
+Use the \cmd{py} command in your LaTeX file:
+\begin{verbatim}
+    \py{print('Hello world' + '!'*5)}
+\end{verbatim}
+
+Then compile as follows:
+\begin{verbatim}
+    pdflatex file.tex
+    pysnip-make -c make
+\end{verbatim}
+
+This is the result:
+\begin{quote}
+    \py[myjob]{print('Hello world' + '!'*5)}
+\end{quote}
+
+
+\section{Advanced usage}
+
+You can pass a job name to \cmd{py}:
+\begin{verbatim}
+    \py[myjob]{print('Hello world' + '!'*5)}
+\end{verbatim}
+
+Look in the \texttt{snippets/} directory. You will see the files:
+
+\begin{description}
+\item[\texttt{myjob.py}] The source that you specified.
+\item[\texttt{myjob.tex}] The resulting latex source.
+\item[\texttt{myjob.rc}] The exit value for the script (0=success).
+\item[\texttt{myjob.pyo}]  The cached copy of the source.
+\end{description}
+
+\section{Even more advanced usage}
+
+Re-run all the scripts:
+
+\begin{verbatim}
+    pysnip-make -c remake
+\end{verbatim}
+
+Re-run all the scripts starting with the string ``\texttt{myjob}'':
+
+\begin{verbatim}
+    pysnip-make -c "remake myjob*""
+\end{verbatim}
+
+Start a Compmake shell:
+
+\begin{verbatim}
+    pysnip-make 
+\end{verbatim}
+
+\end{document}

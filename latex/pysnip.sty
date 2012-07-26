@@ -1,0 +1,161 @@
+% Based on python.sty (Google it!)
+
+\NeedsTeXFormat{LaTeX2e}[1994/12/01]
+\ProvidesPackage{pysnip}[2012/07/25 v0.1 Python snipppets in LaTeX]
+\RequirePackage{etoolbox}
+\RequirePackage{verbatim}
+\RequirePackage{color}
+
+\newwrite\@out
+\newwrite\@module
+\newread\@retcode
+\newread\@cached
+
+% Put the resulting Python code in separate files.
+\newcounter{@PythonEnvironmentCounter}
+\setcounter{@PythonEnvironmentCounter}{1}
+\newcommand{\@outname}{py\jobname\arabic{@PythonEnvironmentCounter}}
+
+\begingroup \catcode `|=0 \catcode `[=1
+\catcode`]=2 \catcode `\{=12 \catcode `\}=12
+\catcode`\\=12 |gdef|@xpython#1\end{python}[|immediate|write|@out[#1]|end[python]]
+|endgroup
+
+\def\python{\kernel@ifnextchar [{\@python}{\@python[]}}
+
+\def\@python[#1]{%
+\gdef\@pythoninclude{#1}
+\immediate\openout\@out=\@outname.py
+\newlinechar='15
+\begingroup \catcode`\^^M=12 %
+\let\do\@makeother\dospecials\obeyspaces%
+\@xpython}
+
+
+
+\def\endpython{%
+\endgroup
+\immediate\closeout\@out
+\@writemodule
+\immediate\write18{cat \@pythoninclude\space\@outname.py | /usr/bin/env python > \@outname.py.out 2> \@outname.py.err; echo $? > \@outname.rc}
+\immediate\input\@outname.py.out
+
+% Read the return code of the executed Python script.
+\immediate\openin\@retcode=\@outname.rc
+\immediate\read\@retcode to \rc
+\immediate\closein\@retcode
+
+% If the return code isn't zero then include
+% the traceback.
+\ifnumequal{\rc}{0}{}{%
+    \begingroup
+        \color{red}
+        \verbatiminput{\@outname.py.err}
+    \endgroup
+}
+
+\immediate\stepcounter{@PythonEnvironmentCounter}
+}
+
+\def\@writemodule{%
+\immediate\openout\@module=latex.py
+\immediate\write\@module{jobname="\@outname"}
+\immediate\closeout\@module}
+
+
+\newcommand{\mypython}[1]{
+    %\gdef\@pythoninclude{#1}%
+    \immediate\openout\@out=\@outname.py%
+    \immediate\write\@out{#1}%
+    \immediate\closeout\@out
+    \@writemodule
+    \immediate\write18{cat \@outname.py | /usr/bin/env python > \@outname.py.out 2> \@outname.py.err; echo $? > \@outname.rc}
+    \immediate\input\@outname.py.out
+    % Read the return code of the executed Python script.
+    \immediate\openin\@retcode=\@outname.rc
+    \immediate\read\@retcode to \rc
+    \immediate\closein\@retcode
+    %
+    % If the return code isn't zero then include
+    % the traceback.
+    \ifnumequal{\rc}{0}{}{%
+        \begingroup
+            \color{red}
+            \verbatiminput{\@outname.py.err}
+        \endgroup
+    }
+    \immediate\stepcounter{@PythonEnvironmentCounter}%
+}
+
+
+\renewcommand{\@outname}{\jobname\arabic{@PythonEnvironmentCounter}}
+\newcommand{\pynotready}[1]{%
+    % #1: outname 
+    {\color[rgb]{0.5,1,0}(Snippet \texttt{#1} not executed yet)}
+}
+\newcommand{\pyfailed}[3]{%
+    % #1: outname 
+    % #2: python string
+    % #3: rc code 
+    {\color{red}Snipped \texttt{#1} failed (exit code: #3)
+        \begingroup
+            \footnotesize
+            \color{red}
+            %\verbatiminput{\@outname.err}
+        \endgroup
+    }
+}
+
+\newcommand{\py}[2][\@outname]{
+    \immediate\write18{mkdir -p snippets}
+    \def\pycode{#2}
+    \def\prefix{snippets/#1}
+    % Read cached file if it exists
+    \IfFileExists{\prefix.pyo}{%
+        %Cache exists
+        % If a cache result might exist:
+        \immediate\openin\@cached=\prefix.pyo
+        \immediate\read\@cached to \cache
+        \immediate\closein\@cached
+    }{
+        %Cache does not exist
+        \def\cache{Cache not present}
+    }
+    %
+    \ifstrequal{\cache}{\pycode}{%
+        %Cache same
+    }{
+        %Cache differs 
+        %\begingroup
+        %    \footnotesize
+        %    \verbatiminput{\@outname.pyo}
+        %\endgroup
+        %\begingroup
+        %    \footnotesize
+        %    \verbatiminput{\@outname.py}
+        %\endgroup
+        \immediate\openout\@out=\prefix.py%
+        \immediate\write\@out{\pycode}%
+        \immediate\closeout\@out
+    }
+    %\@writemodule
+    %\immediate\write18{cat \@outname.py | /usr/bin/env python > \@outname.py.out 2> \@outname.py.err; echo $? > \@outname.rc}
+    % If the return code isn't zero then include
+    % the traceback.
+    %
+    \IfFileExists{\prefix.rc}{%
+        % Read the return code of the executed Python script.
+        \immediate\openin\@retcode=\prefix.rc
+        \immediate\read\@retcode to \rc
+        \immediate\closein\@retcode
+        \ifnumequal{\rc}{0}{%
+            % Everything is fine
+            \immediate\input\prefix.tex%
+        }{
+            % Some problems
+            \pyfailed{\prefix}{}{\rc}%
+        }   
+    }{\pynotready{\prefix}}
+    \immediate\stepcounter{@PythonEnvironmentCounter}%
+}
+
