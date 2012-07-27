@@ -5,10 +5,11 @@
 \RequirePackage{verbatim}
 \RequirePackage{color}
 
+% Directory containing the snippets
+\def\snippetsdir{snippets}
+
 \newwrite\@out
-\newwrite\@module
 \newread\@retcode
-\newread\@cached
 
 % Put the resulting Python code in separate files.
 \newcounter{@PythonEnvironmentCounter}
@@ -20,6 +21,8 @@
     % #1: outname 
     {\color[rgb]{0.5,1,0}(Snippet \texttt{#1} not executed yet)}
 }
+
+% Warn that snippet failed
 \newcommand{\pyfailed}[3]{%
     % #1: outname 
     % #2: python string
@@ -34,42 +37,12 @@
 }
 
 \newcommand{\py}[2][\@outname]{
-    \immediate\write18{mkdir -p snippets}
+    \immediate\write18{mkdir -p \snippetsdir}
     \def\pycode{#2}
-    \def\prefix{snippets/#1}
-    % Read cached file if it exists
-    \IfFileExists{\prefix.pyo}{%
-        %Cache exists
-        % If a cache result might exist:
-        \immediate\openin\@cached=\prefix.pyo
-        \immediate\read\@cached to \cache
-        \immediate\closein\@cached
-    }{
-        %Cache does not exist
-        \def\cache{Cache not present}
-    }
-    %
-    \ifstrequal{\cache}{\pycode}{%
-        %Cache same
-    }{
-        %Cache differs 
-        %\begingroup
-        %    \footnotesize
-        %    \verbatiminput{\@outname.pyo}
-        %\endgroup
-        %\begingroup
-        %    \footnotesize
-        %    \verbatiminput{\@outname.py}
-        %\endgroup
-        \immediate\openout\@out=\prefix.py%
-        \immediate\write\@out{\pycode}%
-        \immediate\closeout\@out
-    }
-    %\@writemodule
-    %\immediate\write18{cat \@outname.py | /usr/bin/env python > \@outname.py.out 2> \@outname.py.err; echo $? > \@outname.rc}
-    % If the return code isn't zero then include
-    % the traceback.
-    %
+    \def\prefix{\snippetsdir/#1}
+    \immediate\openout\@out=\prefix.py%
+    \immediate\write\@out{\pycode}%
+    \immediate\closeout\@out
     \IfFileExists{\prefix.rc}{%
         % Read the return code of the executed Python script.
         \immediate\openin\@retcode=\prefix.rc
