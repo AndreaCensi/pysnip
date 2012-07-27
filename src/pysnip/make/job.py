@@ -31,7 +31,9 @@ class Job():
         self.texfile = os.path.join(self.dirname, '%s.tex' % self.basename)
         self.pyfile = os.path.join(self.dirname, '%s.py' % self.basename)
         self.pyofile = os.path.join(self.dirname, '%s.pyo' % self.basename)
-     
+        self.texincfile = os.path.join(self.dirname, '%s.tex.inc' % self.basename)
+        self.errfile = os.path.join(self.dirname, '%s.err' % self.basename)
+        
         assert os.path.exists(self.pyfile)
         if not os.path.exists(self.rcfile):
             return NOTSTARTED
@@ -72,35 +74,36 @@ class Job():
         try:
             with cap.go():
                 eval(pycode_compiled)
-                
-            with open(self.texfile, 'w') as f:
-                f.write(cap.get_logged_stdout())
-                
-            with open(self.pyofile, 'w') as f:
-                f.write(pycode)
-                
-            with open(self.rcfile, 'w') as f:
-                f.write("0\n")
+            
+            write_to_file(self.texfile, cap.get_logged_stdout())
+            write_to_file(self.pyofile, pycode)
+            write_to_file(self.rcfile, "0\n")
+
+            delete_if_exists(self.texincfile)
+            delete_if_exists(self.errfile)
                 
         except Exception as e:
             logger.error('Failed running snippets %s' % self.basename)
             logger.error('Code:\n%s' % pycode)
-            outfile = os.path.join(self.dirname, self.basename + '.tex.incomplete')
-            with open(outfile, 'w') as f:
-                f.write(cap.get_logged_stdout())
-                
-            errfile = os.path.join(self.dirname, self.basename + '.err')
-            with open(errfile, 'w') as f: 
-                f.write(cap.get_logged_stderr())
-                f.write(traceback.format_exc(e))
             
-            with open(self.rcfile, 'w') as f:
-                f.write("1\n")
+            delete_if_exists(self.pyofile)
+            delete_if_exists(self.texfile)
             
+            write_to_file(self.texincfile, cap.get_logged_stdout())
+            write_to_file(self.errfile, cap.get_logged_stderr() + '\n' + 
+                          traceback.format_exc(e))
+            write_to_file(self.rcfile, "1\n")
             raise 
             
-      
- 
+            
+def write_to_file(filename, what):
+    with open(filename, 'w') as f:
+        f.write(what)
+
+def delete_if_exists(x):
+    if os.path.exists(x):
+        os.unlink(x)
+        
 def contents(f):
     return open(f).read().strip()
         
