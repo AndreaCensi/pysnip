@@ -56,7 +56,7 @@ class Job():
         # (prevents returns)
     
         uptodate = (os.path.exists(self.pyofile) and 
-                    (contents(self.pyofile) == contents(self.pyofile)))
+                    (contents(self.pyofile) == contents(self.pyfile)))
         
         if uptodate:
             return DONE_UPTODATE

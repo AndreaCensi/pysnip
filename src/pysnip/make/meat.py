@@ -1,7 +1,7 @@
 from . import Job, DONE_UPTODATE, FAILED, DONE_NEEDSUPDATE, NOTSTARTED, logger
 from compmake import comp, compmake_console, use_filesystem, batch_command
 from compmake.jobs import (get_job_cache, Cache, mark_as_done, mark_as_failed,
-    mark_as_notstarted)
+    mark_as_notstarted, job_exists)
 from glob import glob
 import os
 
@@ -19,15 +19,19 @@ def pysnip_make(dirname, compmake_command):
     for p in prefixes:
         job = Job(dirname, p)
         job_id = job.basename
+        current_state = None
+        if job_exists(job_id):
+            current_state = get_job_cache(job_id).state
+            
         if job.status == DONE_UPTODATE:
 #            logger.info('%s: done' % job.basename)
-            cache = get_job_cache(job_id)
-            if not cache.state == Cache.DONE:
+            if current_state != Cache.DONE:
                 mark_as_done(job_id)
             pass
         elif job.status == FAILED:
 #            logger.info('%s: failed' % job.basename)
-            mark_as_failed(job_id)
+            if current_state != Cache.FAILED:
+                mark_as_failed(job_id)
         elif job.status == DONE_NEEDSUPDATE:
             mark_as_notstarted(job_id)
 #            logger.info('%s: done (but needs update)' % job.basename)
