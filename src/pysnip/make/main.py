@@ -1,5 +1,6 @@
 from ..utils import CmdOptionParser
 from . import pysnip_make
+import sys
 
 def pysnip_make_main():
     parser = CmdOptionParser('pysnip-make')
@@ -12,8 +13,9 @@ def pysnip_make_main():
 
     options = parser.parse_options()
 
-    pysnip_make(options.snippets_dir, options.command)
+    res = pysnip_make(options.snippets_dir, options.command)
     
+    sys.exit(res)
 
 
 if __name__ == '__main__':
