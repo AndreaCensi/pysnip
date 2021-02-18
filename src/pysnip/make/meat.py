@@ -1,20 +1,27 @@
 from . import Job, DONE_UPTODATE, FAILED, DONE_NEEDSUPDATE, NOTSTARTED, logger
 from compmake import comp, compmake_console, use_filesystem, batch_command
-from compmake.jobs import (get_job_cache, Cache, mark_as_done, mark_as_failed,
-    mark_as_notstarted, job_exists)
+from compmake.jobs import (
+    get_job_cache,
+    Cache,
+    mark_as_done,
+    mark_as_failed,
+    mark_as_notstarted,
+    job_exists,
+)
 from glob import glob
 import os
+
 
 def run_job(job):
     job.run()
 
 
 def pysnip_make(dirname, compmake_command):
-    files = glob(os.path.join(dirname, '*.py'))
+    files = glob(os.path.join(dirname, "*.py"))
     prefixes = [os.path.splitext(os.path.basename(f))[0] for f in files]
-    logger.info('Found %d snippets in directory %s' % (len(prefixes), dirname))
-    
-    use_filesystem(os.path.join(dirname, '.compmake'))
+    logger.info("Found %d snippets in directory %s" % (len(prefixes), dirname))
+
+    use_filesystem(os.path.join(dirname, ".compmake"))
     ntodo = 0
     for p in prefixes:
         job = Job(dirname, p)
@@ -22,34 +29,32 @@ def pysnip_make(dirname, compmake_command):
         current_state = None
         if job_exists(job_id):
             current_state = get_job_cache(job_id).state
-            
+
         if job.status == DONE_UPTODATE:
-#            logger.info('%s: done' % job.basename)
+            #            logger.info('%s: done' % job.basename)
             if current_state != Cache.DONE:
                 mark_as_done(job_id)
             pass
         elif job.status == FAILED:
-#            logger.info('%s: failed' % job.basename)
+            #            logger.info('%s: failed' % job.basename)
             if current_state != Cache.FAILED:
                 mark_as_failed(job_id)
         elif job.status == DONE_NEEDSUPDATE:
             mark_as_notstarted(job_id)
-#            logger.info('%s: done (but needs update)' % job.basename)
+            #            logger.info('%s: done (but needs update)' % job.basename)
             pass
         elif job.status == NOTSTARTED:
             mark_as_notstarted(job_id)
-#            logger.info('%s: not started' % job.basename)
+            #            logger.info('%s: not started' % job.basename)
             pass
-        comp(run_job, job, job_id=job_id) 
+        comp(run_job, job, job_id=job_id)
         if job.status != DONE_UPTODATE:
             ntodo += 1
-            
-#    logger.info('%d/%d jobs to do' % (ntodo, len(prefixes)))
-    batch_command('stats')
+
+    #    logger.info('%d/%d jobs to do' % (ntodo, len(prefixes)))
+    batch_command("stats")
     if compmake_command is not None:
         return batch_command(compmake_command)
     else:
         compmake_console()
         return 0
- 
-     

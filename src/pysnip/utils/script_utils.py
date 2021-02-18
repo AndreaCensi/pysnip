@@ -1,4 +1,4 @@
-__version__ = '1.1'
+__version__ = "1.1"
 
 import sys
 import traceback
@@ -8,15 +8,14 @@ class UserError(Exception):
     pass
 
 
-def wrap_script_entry_point(function, logger,
-                            exceptions_no_traceback=(UserError,)):
+def wrap_script_entry_point(function, logger, exceptions_no_traceback=(UserError,)):
     """
-        Wraps the main() of a script.
-        For Exception: we exit with value 2.
-        
-        :param exceptions_no_traceback: list of exceptions for which we 
-         just print the error, and return 1.
-        
+    Wraps the main() of a script.
+    For Exception: we exit with value 2.
+
+    :param exceptions_no_traceback: list of exceptions for which we
+     just print the error, and return 1.
+
     """
     try:
         ret = function(sys.argv[1:])

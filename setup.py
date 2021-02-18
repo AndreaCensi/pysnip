@@ -11,7 +11,7 @@ setup(name='PySnip',
               'pysnip-make = pysnip.make:pysnip_make_main',
            ]
         },
-        install_requires=['compmake'],
+        install_requires=['compmake-z7'],
         extras_require={},
 )
 
