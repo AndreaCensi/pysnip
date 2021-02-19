@@ -1,25 +1,60 @@
-from ..utils import CmdOptionParser
+import os
+
+from compmake import ContextImp, StorageFilesystem
+from zuper_utils_asyncio import async_main_sti, setup_environment2, SyncTaskInterface
 from . import pysnip_make
-import sys
+from ..utils import CmdOptionParser
 
 
-def pysnip_make_main():
-    parser = CmdOptionParser("pysnip-make")
+@async_main_sti(None)
+async def pysnip_make_main(sti: SyncTaskInterface, args=None):
+    async with setup_environment2(sti, os.getcwd()):
+        await sti.started_and_yield()
 
-    parser.add_option(
-        "-d",
-        dest="snippets_dir",
-        default="snippets",
-        help="Directory containing snippets.",
-    )
+        parser = CmdOptionParser("pysnip-make")
 
-    parser.add_option("-c", "--command", default=None, help="Compmake command")
+        parser.add_option(
+            "-d",
+            dest="snippets_dir",
+            default="snippets",
+            help="Directory containing snippets.",
+        )
 
-    options = parser.parse_options()
+        parser.add_option("-c", "--command", default=None, help="Compmake command")
 
-    res = pysnip_make(options.snippets_dir, options.command)
+        options = parser.parse_options()
+        d = options.snippets_dir
+        dirname = os.path.join(d, 'compmake')
+        db = StorageFilesystem(dirname)
+        context = ContextImp(db=db)
+        await context.init()
 
-    sys.exit(res)
+        pysnip_make(context, db, d)
+
+        if options.command:
+            return await context.batch_command(sti, options.command)
+        else:
+            await context.compmake_console(sti)
+
+
+#
+# def pysnip_make_main():
+#     parser = CmdOptionParser("pysnip-make")
+#
+#     parser.add_option(
+#         "-d",
+#         dest="snippets_dir",
+#         default="snippets",
+#         help="Directory containing snippets.",
+#     )
+#
+#     parser.add_option("-c", "--command", default=None, help="Compmake command")
+#
+#     options = parser.parse_options()
+#
+#     res = pysnip_make(options.snippets_dir, options.command)
+#
+#     sys.exit(res)
 
 
 if __name__ == "__main__":

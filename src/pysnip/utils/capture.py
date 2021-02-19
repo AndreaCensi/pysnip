@@ -1,7 +1,7 @@
-from compmake.jobs.actions import colorize_loglevel
-from compmake.utils.capture import OutputCapture
-from contextlib import contextmanager
 import logging
+from contextlib import contextmanager
+
+from compmake.utils.capture import OutputCapture
 
 
 class Capture:
@@ -15,9 +15,12 @@ class Capture:
 
     def start(self):
         self.capture = OutputCapture(
+            None,
             prefix=self.prefix,
             echo_stdout=self.echo_stdout,
             echo_stderr=self.echo_stderr,
+            publish_stdout=lambda x: None,
+            publish_stderr=(lambda x: None),
         )
 
         # TODO: add whether we should just capture and not echo
@@ -25,12 +28,13 @@ class Capture:
 
         #        if self.capture_logging:
         def my_emit(_, log_record):
-            msg = colorize_loglevel(log_record.levelno, log_record.msg)
-            #  levelname = log_record.levelname
+            msg = log_record.msg
+            # msg = colorize_loglevel(log_record.levelno, log_record.msg)
+            # #  levelname = log_record.levelname
             name = log_record.name
-
-            # print('%s:%s:%s' % (name, levelname, msg))
-            #                print('%s:%s' % (name, msg))
+            #
+            # # print('%s:%s:%s' % (name, levelname, msg))
+            # #                print('%s:%s' % (name, msg))
             self.capture.old_stderr.write(">%s:%s\n" % (name, msg))
 
         logging.StreamHandler.emit = my_emit

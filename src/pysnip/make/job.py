@@ -1,7 +1,8 @@
-from . import logger
-from ..utils import Capture
 import os
 import traceback
+
+from . import logger
+from ..utils import Capture
 
 # States of computation:
 #
