@@ -93,7 +93,7 @@ class Job:
 
             write_to_file(self.texincfile, cap.get_logged_stdout())
             write_to_file(
-                self.errfile, cap.get_logged_stderr() + "\n" + traceback.format_exc(e)
+                self.errfile, cap.get_logged_stderr() + "\n" + traceback.format_exc()
             )
             write_to_file(self.rcfile, "1\n")
             raise

@@ -2,10 +2,10 @@ all: pysnip-manual.pdf
 
 %.pdf: %.tex
 	mkdir -p snippets/
-	pdflatex $*
+	pdflatex -shell-escape $*
 	pysnip-make -c make
-	pdflatex $*
+	pdflatex -shell-escape $*
 
 clean:
-	rm pysnip-manual.pdf
+	rm -f pysnip-manual.pdf
 	rm -rf snippets/
