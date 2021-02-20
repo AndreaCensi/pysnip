@@ -1,6 +1,6 @@
 import os
 import traceback
-
+from zuper_commons.text import remove_escapes
 from . import logger
 from ..utils import Capture
 
@@ -92,8 +92,10 @@ class Job:
             delete_if_exists(self.texfile)
 
             write_to_file(self.texincfile, cap.get_logged_stdout())
+            d = cap.get_logged_stderr() + "\n" + traceback.format_exc()
+            d = remove_escapes(d)
             write_to_file(
-                self.errfile, cap.get_logged_stderr() + "\n" + traceback.format_exc()
+                self.errfile, d
             )
             write_to_file(self.rcfile, "1\n")
             raise
