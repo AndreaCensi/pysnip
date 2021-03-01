@@ -14,3 +14,7 @@ install-sty:
 	mkdir -p $(dir)
 	ln -s $(src) $(dest)
 	mktexlsr   
+
+
+compile:
+	pyinstaller --onefile --distpath . script.py

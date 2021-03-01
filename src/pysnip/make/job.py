@@ -1,5 +1,7 @@
 import os
 import traceback
+
+from zuper_commons.fs import write_ustring_to_utf8_file
 from zuper_commons.text import remove_escapes
 from . import logger
 from ..utils import Capture
@@ -22,15 +24,16 @@ allStatus = [NOTSTARTED, FAILED, DONE_NEEDSUPDATE, DONE_UPTODATE]
 
 
 class Job:
-    def __init__(self, dirname, basename):
+    def __init__(self, dirname: str, basename: str, filename: str):
         self.dirname = dirname
         self.basename = basename
+        self.filename = filename
         self.status = self.find_status()
         assert self.status in allStatus
 
     def find_status(self):
         self.rcfile = os.path.join(self.dirname, "%s.rc" % self.basename)
-        self.texfile = os.path.join(self.dirname, "%s.tex" % self.basename)
+        self.texfile = os.path.join(self.dirname, "%s.texi" % self.basename)
         self.pyfile = os.path.join(self.dirname, "%s.py" % self.basename)
         self.pyofile = os.path.join(self.dirname, "%s.pyo" % self.basename)
         self.texincfile = os.path.join(self.dirname, "%s.tex.inc" % self.basename)
@@ -102,8 +105,9 @@ class Job:
 
 
 def write_to_file(filename, what):
-    with open(filename, "w") as f:
-        f.write(what)
+    write_ustring_to_utf8_file(what, filename)
+    # with open(filename, "w") as f:
+    #     f.write(what)
 
 
 def delete_if_exists(x):

@@ -12,14 +12,16 @@ def run_job(job: Job) -> None:
 
 
 def pysnip_make(c: Context, db: StorageFilesystem, dirname: DirPath):
-    files = glob(os.path.join(dirname, "*.py"))
-    prefixes = [os.path.splitext(os.path.basename(f))[0] for f in files]
-    logger.info("Found %d snippets in directory %s" % (len(prefixes), dirname))
+    files = glob(os.path.join(dirname, "**/*.py"))
+    # prefixes = [os.path.splitext(os.path.basename(f))[0] for f in files]
+    logger.info("Found %d snippets in directory %s" % (len(files), dirname))
 
     # use_filesystem(os.path.join(dirname, ".compmake"))
     ntodo = 0
-    for p in prefixes:
-        job = Job(dirname, p)
+    for filename in files:
+        d = os.path.dirname(filename)
+        basename, _ = os.path.splitext(os.path.basename(filename))
+        job = Job(dirname=d, basename=basename, filename=filename)
         job_id = job.basename
         current_state = None
         if job_exists(job_id, db):

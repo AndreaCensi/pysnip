@@ -1,0 +1,37 @@
+package_name: LatexSymbolManager-z7
+srcdir: src
+version_file: "1"
+modules:
+  - latex_symbol_manager
+
+install_requires:
+  - compmake-z7
+  -
+install_conflicts: [ 'PACKAGENAME-*' ]
+tests_require: [ ]
+
+console_scripts:
+  pysnip-make:  pysnip.make:pysnip_make_main
+
+
+nose:
+  modules:
+    - "*_tests"
+  python_versions:
+    - '3.7'
+    - '3.8'
+
+pypi:
+  upload: [ ]
+
+circleci:
+  active: true
+  test_python_versions: [ '3.7', '3.8' ]
+
+python_syntax_version: '3.7'
+
+url: http://github.com/zupermind/PACKAGENAME
+author: ''
+author_email: 'info@zupermind.com'
+short_description: ''
+full_description: ''
