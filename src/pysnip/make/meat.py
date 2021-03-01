@@ -1,7 +1,14 @@
 import os
 from glob import glob
 
-from compmake import Cache, Context, get_job_cache, job_exists, mark_as_failed, StorageFilesystem
+from compmake import (
+    Cache,
+    Context,
+    get_job_cache,
+    job_exists,
+    mark_as_failed,
+    StorageFilesystem,
+)
 from compmake.actions import mark_as_done, mark_as_notstarted
 from zuper_commons.fs import DirPath
 from . import DONE_NEEDSUPDATE, DONE_UPTODATE, FAILED, Job, logger, NOTSTARTED

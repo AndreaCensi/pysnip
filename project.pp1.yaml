@@ -1,12 +1,12 @@
-package_name: LatexSymbolManager-z7
+package_name: PySnip-z7
 srcdir: src
 version_file: "1"
 modules:
-  - latex_symbol_manager
+  - pysnip
 
 install_requires:
   - compmake-z7
-  -
+
 install_conflicts: [ 'PACKAGENAME-*' ]
 tests_require: [ ]
 
@@ -15,8 +15,7 @@ console_scripts:
 
 
 nose:
-  modules:
-    - "*_tests"
+  modules: []
   python_versions:
     - '3.7'
     - '3.8'

@@ -24,7 +24,7 @@ async def pysnip_make_main(sti: SyncTaskInterface, args=None):
 
         options = parser.parse_options()
         d = options.snippets_dir
-        dirname = os.path.join(d, 'compmake')
+        dirname = os.path.join(d, "compmake")
         db = StorageFilesystem(dirname)
         context = ContextImp(db=db)
         await context.init()

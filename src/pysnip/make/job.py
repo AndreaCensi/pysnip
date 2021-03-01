@@ -97,9 +97,7 @@ class Job:
             write_to_file(self.texincfile, cap.get_logged_stdout())
             d = cap.get_logged_stderr() + "\n" + traceback.format_exc()
             d = remove_escapes(d)
-            write_to_file(
-                self.errfile, d
-            )
+            write_to_file(self.errfile, d)
             write_to_file(self.rcfile, "1\n")
             raise
 
