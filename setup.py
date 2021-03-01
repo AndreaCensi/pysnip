@@ -1,17 +1,27 @@
-from setuptools import setup, find_packages
+import json
 
-setup(
-    name="PySnip",
-    author="Andrea Censi",
-    author_email="andrea@cds.caltech.edu",
-    version="0.1",
-    package_dir={"": "src"},
-    packages=find_packages("src"),
-    entry_points={
-        "console_scripts": [
-            "pysnip-make = pysnip.make:pysnip_make_main",
-        ]
-    },
-    install_requires=["compmake-z7"],
-    extras_require={},
+from setuptools import setup
+
+with open("setup.json") as f:
+    data = json.load(f)
+
+# setup package
+params = dict(
+    name=data["package_name"],
+    author=data["author"],
+    author_email=data["author_email"],
+    url=data["url"],
+    tests_require=data["tests_require"],
+    install_requires=data["install_requires"],
+    package_dir={"": data["srcdir"]},
+    packages=data["modules"],
+    long_description="",
+    version=data["version"],
+    entry_points=data["entry_points"],
+    zip_safe=data["zip_safe"],
+    include_package_data=data["include_package_data"],
 )
+
+setup(**params)
+
+# sigil db3b1eaa6e910979b80cf8826d500c83
