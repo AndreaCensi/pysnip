@@ -6,6 +6,8 @@ modules:
 
 install_requires:
   - compmake-z7
+  - zuper-utils-asyncio-z7
+  - zuper-commons-z7
 
 install_conflicts: [ 'PACKAGENAME-*' ]
 tests_require: [ ]
