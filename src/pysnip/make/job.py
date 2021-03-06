@@ -60,9 +60,7 @@ class Job:
         # as basename.py; mark basename.tex more recent than basename.py
         # (prevents returns)
 
-        uptodate = os.path.exists(self.pyofile) and (
-            contents(self.pyofile) == contents(self.pyfile)
-        )
+        uptodate = os.path.exists(self.pyofile) and (contents(self.pyofile) == contents(self.pyfile))
 
         if uptodate:
             return DONE_UPTODATE
@@ -72,12 +70,12 @@ class Job:
     def run(self):
         pycode = contents(self.pyfile)
 
-        pycode_compiled = compile(pycode, self.pyfile, "exec")
-
         cap = Capture(prefix=self.basename, echo_stdout=False, echo_stderr=True)
 
         try:
+
             with cap.go():
+                pycode_compiled = compile(pycode, self.pyfile, "exec")
                 eval(pycode_compiled)
 
             write_to_file(self.texfile, cap.get_logged_stdout())
@@ -87,9 +85,8 @@ class Job:
             delete_if_exists(self.texincfile)
             delete_if_exists(self.errfile)
 
-        except Exception as e:
-            logger.error("Failed running snippets %s" % self.basename)
-            logger.error("Code:\n%s" % pycode)
+        except BaseException as e:
+            logger.error("Failed running snippets %s" % self.basename, pycode=pycode)
 
             delete_if_exists(self.pyofile)
             delete_if_exists(self.texfile)

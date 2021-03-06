@@ -1,3 +1,4 @@
+import asyncio
 import os
 
 from compmake import ContextImp, StorageFilesystem
@@ -14,10 +15,7 @@ async def pysnip_make_main(sti: SyncTaskInterface, args=None):
         parser = CmdOptionParser("pysnip-make")
 
         parser.add_option(
-            "-d",
-            dest="snippets_dir",
-            default="snippets",
-            help="Directory containing snippets.",
+            "-d", dest="snippets_dir", default="snippets", help="Directory containing snippets.",
         )
 
         parser.add_option("-c", "--command", default=None, help="Compmake command")
@@ -30,7 +28,7 @@ async def pysnip_make_main(sti: SyncTaskInterface, args=None):
         await context.init()
 
         pysnip_make(context, db, d)
-
+        await asyncio.sleep(4)
         if options.command:
             return await context.batch_command(sti, options.command)
         else:

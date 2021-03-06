@@ -1,8 +1,10 @@
 import os
 from glob import glob
+from typing import cast
 
 from compmake import (
     Cache,
+    CMJobID,
     Context,
     get_job_cache,
     job_exists,
@@ -18,18 +20,33 @@ def run_job(job: Job) -> None:
     job.run()
 
 
+def get_last_mtime(d: DirPath):
+    files = glob(os.path.join(d, "*.py"))
+    return max(os.stat(_).st_mtime for _ in files)
+
+
 def pysnip_make(c: Context, db: StorageFilesystem, dirname: DirPath):
     files = glob(os.path.join(dirname, "**/*.py"))
     # prefixes = [os.path.splitext(os.path.basename(f))[0] for f in files]
     logger.info("Found %d snippets in directory %s" % (len(files), dirname))
 
     # use_filesystem(os.path.join(dirname, ".compmake"))
+    dirs = set()
     ntodo = 0
     for filename in files:
         d = os.path.dirname(filename)
+        dirs.add(d)
+        dtime = get_last_mtime(d)
+        mtime = os.stat(filename).st_mtime
+        delta = dtime - mtime
+        if delta > 60:
+            logger.warn("Is this an old file? deleting", fn=filename, delta=delta)
+            os.unlink(filename)
+            continue
+
         basename, _ = os.path.splitext(os.path.basename(filename))
         job = Job(dirname=d, basename=basename, filename=filename)
-        job_id = job.basename
+        job_id = cast(CMJobID, job.basename)
         current_state = None
         if job_exists(job_id, db):
             current_state = get_job_cache(job_id, db).state
@@ -54,3 +71,23 @@ def pysnip_make(c: Context, db: StorageFilesystem, dirname: DirPath):
         c.comp(run_job, job, job_id=job_id)
         if job.status != DONE_UPTODATE:
             ntodo += 1
+
+    for d in dirs:
+        good_roots = set()
+        for f in os.listdir(d):
+            if f.endswith(".py"):
+                basename, _, _ = f.partition(".")  # remove double extension
+                good_roots.add(basename)
+
+        for f in os.listdir(d):
+            fn = os.path.join(d, f)
+
+            if not os.path.isfile(fn):
+                continue
+            basename, _, ext = f.partition(".")  # remove double extension
+            if ext not in ["texi", "rc", "err", "pyo"]:
+                continue
+
+            if not basename in good_roots:
+                os.unlink(fn)
+                logger.warn("deleted", fn=fn, good=good_roots)
