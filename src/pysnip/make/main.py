@@ -2,7 +2,8 @@ import asyncio
 import os
 
 from compmake import ContextImp, StorageFilesystem
-from zuper_utils_asyncio import async_main_sti, setup_environment2, SyncTaskInterface
+from zuper_utils_asyncio import SyncTaskInterface
+from zuper_zapp import async_main_sti, setup_environment2
 from . import pysnip_make
 from ..utils import CmdOptionParser
 

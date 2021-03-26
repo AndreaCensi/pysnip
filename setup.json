@@ -1,0 +1,27 @@
+{
+  "install_requires": [
+    "compmake-z7",
+    "zuper-commons-z7",
+    "zuper-utils-asyncio-z7",
+    "zuper-zapp-z7"
+  ],
+  "tests_require": [],
+  "srcdir": "src",
+  "package_name": "PySnip-z7",
+  "entry_points": {
+    "console_scripts": [
+      "pysnip-make = pysnip.make:pysnip_make_main"
+    ]
+  },
+  "zip_safe": false,
+  "include_package_data": false,
+  "modules": [
+    "pysnip",
+    "pysnip.make",
+    "pysnip.utils"
+  ],
+  "version": "7.1.2103061520",
+  "author": "",
+  "author_email": "info@zupermind.com",
+  "url": "http://github.com/zupermind/PACKAGENAME"
+}
