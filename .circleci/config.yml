@@ -31,7 +31,7 @@ version: 2
 workflows:
   test:
     jobs:
-    - test-3.8:
+    - test-3.8-staging:
         context: pip-staging
         filters:
           branches: {only: /z7-stage-.*/}
@@ -41,4 +41,4 @@ workflows:
           branches: {ignore: /z7-stage-.*/}
   version: 2
 
-# sigil 43dbe7a99cf340d75cf7374300ccf131
+# sigil 3f23ef988cf1f312c647d746fb5a034a
