@@ -2,8 +2,7 @@ jobs:
   test-3.8-production:
     docker:
     - {image: python:3.8}
-    environment: {COLUMNS: '160', COVER_PACKAGES: 'pysnip.utils,pysnip.utils.capture,pysnip.write_source,pysnip,pysnip.utils.script_utils,pysnip.utils.lenient_option_parser,pysnip.make.job,pysnip.make.meat,pysnip.make,pysnip.make.main',
-      PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin,
+    environment: {COLUMNS: '160', COVER_PACKAGES: pysnip, PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin,
       TEST_PACKAGES: ''}
     steps:
     - checkout
@@ -45,8 +44,7 @@ jobs:
   test-3.8-staging:
     docker:
     - {image: python:3.8}
-    environment: {COLUMNS: '160', COVER_PACKAGES: 'pysnip.utils,pysnip.utils.capture,pysnip.write_source,pysnip,pysnip.utils.script_utils,pysnip.utils.lenient_option_parser,pysnip.make.job,pysnip.make.meat,pysnip.make,pysnip.make.main',
-      PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin,
+    environment: {COLUMNS: '160', COVER_PACKAGES: pysnip, PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin,
       TEST_PACKAGES: ''}
     steps:
     - checkout
@@ -99,4 +97,4 @@ workflows:
           branches: {ignore: /z7-stage.*/}
   version: 2
 
-# sigil e149866c2dfd6890656c761fddf952ea
+# sigil 84811c1daceafb24a70d78bef7965a90
