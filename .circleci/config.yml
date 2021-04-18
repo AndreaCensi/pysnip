@@ -35,8 +35,8 @@ jobs:
           \ \\\n  --cover-package=${COVER_PACKAGES} \\\n  ${TEST_PACKAGES}\n", name: Run
           tests}
     - store_test_results: {path: out/test-results, when: always}
-    - run: {command: "coverage combine\ncoverage html -d out/coverage\ncoverage xml\n",
-        name: Coverage report, when: always}
+    - run: {command: "coverage combine || true\ncoverage html -d out/coverage\ncoverage\
+          \ xml\n", name: Coverage report, when: always}
     - store_artifacts: {destination: coverage, path: out/coverage, when: always}
     - store_artifacts: {destination: tests, path: out/tests, when: always}
     - run: {command: "bash <(curl -s https://codecov.io/bash)\n", name: CodeCov, when: always}
@@ -77,8 +77,8 @@ jobs:
           \ \\\n  --cover-package=${COVER_PACKAGES} \\\n  ${TEST_PACKAGES}\n", name: Run
           tests}
     - store_test_results: {path: out/test-results, when: always}
-    - run: {command: "coverage combine\ncoverage html -d out/coverage\ncoverage xml\n",
-        name: Coverage report, when: always}
+    - run: {command: "coverage combine || true\ncoverage html -d out/coverage\ncoverage\
+          \ xml\n", name: Coverage report, when: always}
     - store_artifacts: {destination: coverage, path: out/coverage, when: always}
     - store_artifacts: {destination: tests, path: out/tests, when: always}
     - run: {command: "bash <(curl -s https://codecov.io/bash)\n", name: CodeCov, when: always}
@@ -97,4 +97,4 @@ workflows:
           branches: {ignore: /z7-stage.*/}
   version: 2
 
-# sigil 84811c1daceafb24a70d78bef7965a90
+# sigil 89e6ddf8ef213ebcc6d819e47ddd7ce7
