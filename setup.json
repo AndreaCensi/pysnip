@@ -20,8 +20,8 @@
     "pysnip.make",
     "pysnip.utils"
   ],
-  "version": "7.1.2103262007",
+  "version": "7.1.2104181348",
   "author": "",
   "author_email": "info@zupermind.com",
-  "url": "http://github.com/zupermind/PACKAGENAME"
+  "url": "https://github.com/zupermind/PACKAGENAME"
 }
