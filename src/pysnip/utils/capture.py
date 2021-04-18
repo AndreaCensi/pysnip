@@ -5,9 +5,7 @@ from compmake.utils.capture import OutputCapture
 
 
 class Capture:
-    def __init__(
-        self, prefix, echo_stdout=True, echo_stderr=True, capture_logging=False
-    ):
+    def __init__(self, prefix, echo_stdout=True, echo_stderr=True, capture_logging=False):
         self.prefix = prefix
         self.echo_stdout = echo_stdout
         self.echo_stderr = echo_stderr

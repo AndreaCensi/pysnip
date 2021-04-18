@@ -16,9 +16,7 @@ class LenientOptionParser(optparse.OptionParser):
 
 
 def MyOptionParser(prog, usage):
-    formatter = IndentedHelpFormatter(
-        indent_increment=2, max_help_position=80, width=100, short_first=1
-    )
+    formatter = IndentedHelpFormatter(indent_increment=2, max_help_position=80, width=100, short_first=1)
 
     parser = LenientOptionParser(prog=prog, formatter=formatter, usage=usage)
     parser.disable_interspersed_args()
@@ -31,9 +29,7 @@ class CmdOptionParser(LenientOptionParser):
             args = sys.argv[1:]
         self.given = args
 
-        formatter = IndentedHelpFormatter(
-            indent_increment=2, max_help_position=80, width=100, short_first=1
-        )
+        formatter = IndentedHelpFormatter(indent_increment=2, max_help_position=80, width=100, short_first=1)
 
         LenientOptionParser.__init__(self, prog=prog, usage=usage, formatter=formatter)
         self.disable_interspersed_args()

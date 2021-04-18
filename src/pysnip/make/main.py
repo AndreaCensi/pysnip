@@ -16,7 +16,10 @@ async def pysnip_make_main(sti: SyncTaskInterface, args=None):
         parser = CmdOptionParser("pysnip-make")
 
         parser.add_option(
-            "-d", dest="snippets_dir", default="snippets", help="Directory containing snippets.",
+            "-d",
+            dest="snippets_dir",
+            default="snippets",
+            help="Directory containing snippets.",
         )
 
         parser.add_option("-c", "--command", default=None, help="Compmake command")
