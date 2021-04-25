@@ -1,4 +1,4 @@
-version: 2
+version: '2'
 workflows:
   version: 2
   test:
@@ -146,6 +146,7 @@ jobs:
         when: always
         command: |
           bash <(curl -s https://codecov.io/bash)
+    resource_class: medium+
   test-3.7-production:
     environment:
       COLUMNS: '160'
@@ -268,6 +269,7 @@ jobs:
         when: always
         command: |
           bash <(curl -s https://codecov.io/bash)
+    resource_class: medium+
   test-3.8-staging:
     environment:
       COLUMNS: '160'
@@ -390,6 +392,7 @@ jobs:
         when: always
         command: |
           bash <(curl -s https://codecov.io/bash)
+    resource_class: medium+
   test-3.8-production:
     environment:
       COLUMNS: '160'
@@ -512,5 +515,6 @@ jobs:
         when: always
         command: |
           bash <(curl -s https://codecov.io/bash)
+    resource_class: medium+
 
-# sigil fb3a20bbad7d520435213b62fd66d867
+# sigil c3fdc66db68b550cd3cd6625b8a48440
