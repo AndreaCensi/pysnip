@@ -43,7 +43,7 @@ install-testing-deps:
 
 	pip install 		pipdeptree==0.13.2		bumpversion		nose==1.3.7		nose2==0.9.2		nose2-html-report==0.6.0		nose-parallel==0.3.1		nose_xunitmp==0.4.1		pre-commit==2.1.1		rednose==1.3.0		coverage==5.0.3		codecov==2.0.16		sphinx		sphinx-rtd-theme
 
-cover_packages=pysnip.utils,pysnip,pysnip.make,pysnip_tests
+cover_packages=pysnip.make,pysnip.utils,pysnip,pysnip_tests
 
 # PROJECT_ROOT ?= /project
 # REGISTRY ?= docker.io
@@ -91,4 +91,4 @@ docs:
 	
 -include extra.mk
         
-# sigil c925fdbbe34e71c8d7d5e6243b0a7a8c
+# sigil 538f987239426de7f2fc8cf8583ddfa2
