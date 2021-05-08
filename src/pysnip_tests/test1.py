@@ -1,2 +1,4 @@
 def test1():
-    pass
+    from pysnip import __version__
+
+    return __version__
