@@ -11,7 +11,7 @@ install_requires:
 - zuper-commons-z7
 - zuper-zapp-z7
 
-install_conflicts: [PACKAGENAME-*]
+
 tests_require: []
 
 console_scripts:
