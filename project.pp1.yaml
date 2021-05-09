@@ -1,40 +1,37 @@
 ---
-package_name         : PySnip-z7
-srcdir               : src
-version_file         : '1'
-modules              :
-- pysnip
+package_name: PySnip-z7
+srcdir: src
+version_file: '1'
+modules:
+    - pysnip
 
-install_requires     :
-- compmake-z7
-- zuper-utils-asyncio-z7
-- zuper-commons-z7
-- zuper-zapp-z7
+install_requires:
+    - compmake-z7
+    - zuper-utils-asyncio-z7
+    - zuper-commons-z7
+    - zuper-zapp-z7
 
-install_conflicts    : [PACKAGENAME-*]
-tests_require        : []
+install_conflicts: [PACKAGENAME-*]
+tests_require: []
 
-console_scripts      :
-  pysnip-make: pysnip.make:pysnip_make_main
+console_scripts:
+    pysnip-make: pysnip.make:pysnip_make_main
 
 
-nose                 :
-  modules: ['*tests']
-  python_versions:
-  - '3.7'
-  - '3.8'
+nose:
+    modules: ['*tests']
 
-pypi                 :
-  upload: []
+pypi:
+    upload: []
 
-circleci             :
-  active: true
-  test_python_versions: ['3.8']
+circleci:
+    active: true
+    test_python_versions: ['3.8']
 
 python_syntax_version: '3.8'
 
-url                  : https://github.com/zupermind/PACKAGENAME
-author               : ''
-author_email         : info@zupermind.com
-short_description    : ''
-full_description     : ''
+url: https://github.com/zupermind/PACKAGENAME
+author: Andrea Censi
+author_email: info@zupermind.com
+short_description: ''
+full_description: ''
