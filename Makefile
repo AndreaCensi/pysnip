@@ -66,7 +66,7 @@ clean:
 
 test:  
 	mkdir -p  $(tr)
-	DISABLE_CONTRACTS=1 nosetests $(extra) $(coverage)  pysnip_tests  -v --nologcapture $dock(xunit)
+	DISABLE_CONTRACTS=1 nosetests $(extra) $(coverage)  pysnip_tests  -v --nologcapture $(xunit)
 
 
 test-parallel:  
@@ -87,4 +87,4 @@ docs:
 	
 -include extra.mk
         
-# sigil de25da5077670ee4f2404a0233bdadd2
+# sigil 4e7c58e4cb6489c10a95ea26eab06efd
