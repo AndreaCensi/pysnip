@@ -1,18 +1,24 @@
 
 all:
+	@echo "You can try:"
 	@echo
-	 
+	@echo "  make build run"
+	@echo "  make docs "
+	@echo "  make test coverage-combine coverage-report"
+	@echo "  "
+	@echo "  make -C notebooks clean all"
 
-template:
-	zuper-cli template
-	
 bump:
-	zuper-cli bump
+	bumpversion patch
+	git push --tags
+	git push
 
 upload:
-	zuper-cli upload
+	aido-check-not-dirty
+	aido-check-tagged
+	aido-check-need-upload --package PySnip-z7 make upload-do
 
-upload-old:
+upload-do:
 	rm -f dist/*
 	rm -rf src/*.egg-info
 	python3 setup.py sdist
@@ -37,7 +43,7 @@ install-testing-deps:
 
 	pip install 		pipdeptree==0.13.2		bumpversion		nose==1.3.7		nose2==0.9.2		nose2-html-report==0.6.0		nose-parallel==0.3.1		nose_xunitmp==0.4.1		pre-commit==2.1.1		rednose==1.3.0		coverage==5.0.3		codecov==2.0.16		sphinx		sphinx-rtd-theme
 
-cover_packages=pysnip,pysnip.make,pysnip.utils,pysnip_tests
+cover_packages=pysnip,pysnip.make,pysnip_tests,pysnip.utils
 
 # PROJECT_ROOT ?= /project
 # REGISTRY ?= docker.io
@@ -56,7 +62,6 @@ parallel=--processes=8 --process-timeout=1000 --process-restartworker
 coverage=--cover-html --cover-html-dir=$(coverage_dir) --cover-tests \
             --with-coverage --cover-package=$(cover_packages)
 
-xunit=--with-xunit --xunit-file=$(xunit_output)
 xunitmp=--with-xunitmp --xunitmp-file=$(xunit_output)
 extra=--rednose --immediate
 
@@ -64,19 +69,18 @@ clean:
 	coverage erase
 	rm -rf $(out) $(coverage_dir) $(tr)
 
-test:  
+test: clean
 	mkdir -p  $(tr)
-	DISABLE_CONTRACTS=1 nosetests $(extra) $(coverage)  pysnip_tests  -v --nologcapture $dock(xunit)
+	DISABLE_CONTRACTS=1 nosetests $(extra) $(coverage)  src  -v --nologcapture $(xunitmp)
 
 
-test-parallel:  
+test-parallel: clean
 	mkdir -p  $(tr)
-	DISABLE_CONTRACTS=1 nosetests $(extra) $(coverage) pysnip_tests  -v --nologcapture $(parallel) $(xunitmp)
+	DISABLE_CONTRACTS=1 nosetests $(extra) $(coverage) src  -v --nologcapture $(parallel)
 
 
 test-parallel-circle:
-	mkdir -p  $(tr)
-	DISABLE_CONTRACTS=1 	NODE_TOTAL=$(CIRCLE_NODE_TOTAL) 	NODE_INDEX=$(CIRCLE_NODE_INDEX) 	nosetests $(coverage) $(xunitmp) pysnip_tests  -v  $(parallel)
+	DISABLE_CONTRACTS=1 	NODE_TOTAL=$(CIRCLE_NODE_TOTAL) 	NODE_INDEX=$(CIRCLE_NODE_INDEX) 	nosetests $(coverage) $(xunitmp) TEST_PACKAGES  -v  $(parallel)
 
 
 coverage-combine:
@@ -87,4 +91,4 @@ docs:
 	
 -include extra.mk
         
-# sigil de25da5077670ee4f2404a0233bdadd2
+# sigil 720d66b2f87b0f7428b4ca325bc3fb2c
