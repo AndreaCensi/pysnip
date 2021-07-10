@@ -26,7 +26,7 @@ async def pysnip_make_main(ze: ZappEnv):
     options = parser.parse_options()
     d = options.snippets_dir
     dirname = os.path.join(d, "compmake")
-    db = StorageFilesystem(dirname)
+    db = StorageFilesystem(dirname, compress=True)
     context = ContextImp(db=db)
     await context.init(sti)
 
