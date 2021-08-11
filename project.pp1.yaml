@@ -7,7 +7,6 @@ modules:
 
 install_requires:
 - compmake-z7
-- zuper-utils-asyncio-z7
 - zuper-commons-z7
 - zuper-zapp-z7
 
