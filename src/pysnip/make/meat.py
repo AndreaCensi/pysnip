@@ -28,7 +28,7 @@ def get_last_mtime(d: DirPath):
 def pysnip_make(c: Context, db: StorageFilesystem, dirname: DirPath):
     files = glob(os.path.join(dirname, "**/*.py"))
     # prefixes = [os.path.splitext(os.path.basename(f))[0] for f in files]
-    logger.info("Found %d snippets in directory %s" % (len(files), dirname))
+    logger.info(f"Found {len(files)} snippets in directory {dirname}")
 
     # use_filesystem(os.path.join(dirname, ".compmake"))
     dirs = set()

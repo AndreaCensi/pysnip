@@ -85,8 +85,8 @@ class Job:
             delete_if_exists(self.texincfile)
             delete_if_exists(self.errfile)
 
-        except BaseException as e:
-            logger.error("Failed running snippets %s" % self.basename, pycode=pycode)
+        except BaseException:
+            logger.error(f"Failed running snippets {self.basename}", pycode=pycode)
 
             delete_if_exists(self.pyofile)
             delete_if_exists(self.texfile)
@@ -94,6 +94,7 @@ class Job:
             write_to_file(self.texincfile, cap.get_logged_stdout())
             d = cap.get_logged_stderr() + "\n" + traceback.format_exc()
             d = remove_escapes(d)
+            d = d.encode("ascii", errors="replace").decode()
             write_to_file(self.errfile, d)
             write_to_file(self.rcfile, "1\n")
             raise
