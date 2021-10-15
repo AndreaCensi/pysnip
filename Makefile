@@ -71,8 +71,7 @@ test:
 
 test-parallel:  
 	mkdir -p  $(tr)
-	DISABLE_CONTRACTS=1 nosetests $(extra) $(coverage) pysnip_tests  -v --nologcapture $(parallel) $(
-	xunitmp)
+	DISABLE_CONTRACTS=1 nosetests $(extra) $(coverage) pysnip_tests -v --nologcapture $(parallel) $(xunitmp)
 
 
 test-parallel-circle:
@@ -88,4 +87,4 @@ docs:
 	
 -include extra.mk
         
-# sigil 4b1bb29174215f196c16686ab1cecb59
+# sigil f90ce71c0349a0db3f7cfdee4baa3f46
