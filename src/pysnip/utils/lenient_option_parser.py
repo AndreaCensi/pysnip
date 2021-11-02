@@ -38,7 +38,7 @@ class CmdOptionParser(LenientOptionParser):
         return self.parse_args(self.given)
 
     def parse_options(self):
-        """ Returns only the options, checking no spurious args """
+        """Returns only the options, checking no spurious args"""
         options, args = self.parse()
         if args:
             raise UserError("Spurious arguments: %s" % args)
