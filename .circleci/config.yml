@@ -31,8 +31,8 @@ jobs:
       COLUMNS: '160'
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-      COVER_PACKAGES: pysnip,pysnip_tests
-      TEST_PACKAGES: pysnip_tests
+      COVER_PACKAGES: pysnip,pysnip_tests,pysnip_tests.test1
+      TEST_PACKAGES: pysnip_tests pysnip_tests
     docker:
     - image: ${DOCKER_REGISTRY}/zupermind/zuper-ci-3.8:z7
       auth:
@@ -120,6 +120,19 @@ jobs:
     #       make -C notebooks cleanup all
 
 
+    - run:
+        name: pysnip_tests
+        command: |-
+          set -euxo pipefail
+          mkdir -p out/test-results
+          xunit_output=$PWD/out/test-results/nose-${CIRCLE_NODE_INDEX}-pysnip_tests-xunit.xml
+          nosetests \
+              --rednose --immediate \
+              --cover-tests --with-coverage \
+              --with-xunit --xunit-file=${xunit_output} \
+              --cover-package=${COVER_PACKAGES} \
+              pysnip_tests
+        when: always
     - run:
         name: pysnip_tests
         command: |-
@@ -173,8 +186,8 @@ jobs:
       COLUMNS: '160'
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-      COVER_PACKAGES: pysnip,pysnip_tests
-      TEST_PACKAGES: pysnip_tests
+      COVER_PACKAGES: pysnip,pysnip_tests,pysnip_tests.test1
+      TEST_PACKAGES: pysnip_tests pysnip_tests
     docker:
     - image: ${DOCKER_REGISTRY}/zupermind/zuper-ci-3.8:z7
       auth:
@@ -276,6 +289,19 @@ jobs:
               pysnip_tests
         when: always
     - run:
+        name: pysnip_tests
+        command: |-
+          set -euxo pipefail
+          mkdir -p out/test-results
+          xunit_output=$PWD/out/test-results/nose-${CIRCLE_NODE_INDEX}-pysnip_tests-xunit.xml
+          nosetests \
+              --rednose --immediate \
+              --cover-tests --with-coverage \
+              --with-xunit --xunit-file=${xunit_output} \
+              --cover-package=${COVER_PACKAGES} \
+              pysnip_tests
+        when: always
+    - run:
         name: post-circle-tests
         command: |
           TARGET=post-circle-tests
@@ -315,8 +341,8 @@ jobs:
       COLUMNS: '160'
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-      COVER_PACKAGES: pysnip,pysnip_tests
-      TEST_PACKAGES: pysnip_tests
+      COVER_PACKAGES: pysnip,pysnip_tests,pysnip_tests.test1
+      TEST_PACKAGES: pysnip_tests pysnip_tests
     docker:
     - image: ${DOCKER_REGISTRY}/zupermind/zuper-ci-3.9:z7
       auth:
@@ -404,6 +430,19 @@ jobs:
     #       make -C notebooks cleanup all
 
 
+    - run:
+        name: pysnip_tests
+        command: |-
+          set -euxo pipefail
+          mkdir -p out/test-results
+          xunit_output=$PWD/out/test-results/nose-${CIRCLE_NODE_INDEX}-pysnip_tests-xunit.xml
+          nosetests \
+              --rednose --immediate \
+              --cover-tests --with-coverage \
+              --with-xunit --xunit-file=${xunit_output} \
+              --cover-package=${COVER_PACKAGES} \
+              pysnip_tests
+        when: always
     - run:
         name: pysnip_tests
         command: |-
@@ -457,8 +496,8 @@ jobs:
       COLUMNS: '160'
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-      COVER_PACKAGES: pysnip,pysnip_tests
-      TEST_PACKAGES: pysnip_tests
+      COVER_PACKAGES: pysnip,pysnip_tests,pysnip_tests.test1
+      TEST_PACKAGES: pysnip_tests pysnip_tests
     docker:
     - image: ${DOCKER_REGISTRY}/zupermind/zuper-ci-3.9:z7
       auth:
@@ -560,6 +599,19 @@ jobs:
               pysnip_tests
         when: always
     - run:
+        name: pysnip_tests
+        command: |-
+          set -euxo pipefail
+          mkdir -p out/test-results
+          xunit_output=$PWD/out/test-results/nose-${CIRCLE_NODE_INDEX}-pysnip_tests-xunit.xml
+          nosetests \
+              --rednose --immediate \
+              --cover-tests --with-coverage \
+              --with-xunit --xunit-file=${xunit_output} \
+              --cover-package=${COVER_PACKAGES} \
+              pysnip_tests
+        when: always
+    - run:
         name: post-circle-tests
         command: |
           TARGET=post-circle-tests
@@ -595,4 +647,4 @@ jobs:
           bash <(curl -s https://codecov.io/bash)
     resource_class: medium
 
-# sigil 4570b1290ec016649d1456da425aa2e0
+# sigil ced626be3f0bc3e407dc0d5db2b95a1d

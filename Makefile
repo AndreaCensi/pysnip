@@ -48,7 +48,7 @@ install-testing-deps:
 		codecov\
 		sphinx\
 		sphinx-rtd-theme
-cover_packages=pysnip,pysnip.make,pysnip.utils,pysnip_tests
+cover_packages=pysnip,pysnip.make,pysnip.utils,pysnip_tests,pysnip_tests.test1
 
 # PROJECT_ROOT ?= /project
 # REGISTRY ?= docker.io
@@ -77,12 +77,12 @@ clean:
 
 test:
 	mkdir -p  $(tr)
-	DISABLE_CONTRACTS=1 nosetests $(extra) $(coverage)  pysnip_tests  -v --nologcapture $(xunit)
+	DISABLE_CONTRACTS=1 nosetests $(extra) $(coverage)  pysnip_tests pysnip_tests  -v --nologcapture $(xunit)
 
 
 test-parallel:
 	mkdir -p  $(tr)
-	DISABLE_CONTRACTS=1 nosetests $(extra) $(coverage) pysnip_tests -v --nologcapture $(parallel) $(xunitmp)
+	DISABLE_CONTRACTS=1 nosetests $(extra) $(coverage) pysnip_tests pysnip_tests -v --nologcapture $(parallel) $(xunitmp)
 
 
 test-parallel-circle:
@@ -90,7 +90,7 @@ test-parallel-circle:
 	DISABLE_CONTRACTS=1 \
 	NODE_TOTAL=$(CIRCLE_NODE_TOTAL) \
 	NODE_INDEX=$(CIRCLE_NODE_INDEX) \
-	nosetests $(coverage) $(xunitmp) pysnip_tests  -v  $(parallel)
+	nosetests $(coverage) $(xunitmp) pysnip_tests pysnip_tests  -v  $(parallel)
 
 
 coverage-combine:
@@ -101,4 +101,4 @@ docs:
 
 -include extra.mk
 
-# sigil 8ef6c787d29f5a29f6e67e8808cdb823
+# sigil b6d3f5ca2c0e8e548d189fc71957aaa2
