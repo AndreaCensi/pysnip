@@ -2,13 +2,14 @@ import asyncio
 import os
 
 from compmake import ContextImp, StorageFilesystem
+from zuper_commons.cmds import ExitCode
 from zuper_zapp import zapp1, ZappEnv
 from . import pysnip_make
 from ..utils import CmdOptionParser
 
 
 @zapp1()
-async def pysnip_make_main(ze: ZappEnv):
+async def pysnip_make_main(ze: ZappEnv) -> ExitCode:
     sti = ze.sti
     await sti.started_and_yield()
 
@@ -36,6 +37,7 @@ async def pysnip_make_main(ze: ZappEnv):
         return await context.batch_command(sti, options.command)
     else:
         await context.compmake_console(sti)
+    return ExitCode.OK
 
 
 #
