@@ -262,7 +262,8 @@ jobs:
           fi
           mkdir -p out/test-results
           xunit_output=$PWD/out/test-results/nose-${CIRCLE_NODE_INDEX}-pysnip_tests-xunit.xml
-          nose2 --with-coverage --plugin nose2.plugins.junitxml --junit-xml --junit-xml-path ${xunit_output} $TEST_MODULES
+          nose2 --with-coverage --plugin nose2.plugins.junitxml --junit-xml --junit-xml-path ${xunit_output}
+          $TEST_MODULES
           # TODO: cover packages
     - run:
         name: post-circle-tests
@@ -303,4 +304,4 @@ jobs:
           ./codecov -t ${CODECOV_TOKEN}
     resource_class: small
 
-# sigil a0af9a0002fde1e307514206eca72e74
+# sigil 5935b3027b8364687553a8ed4e2cba78
