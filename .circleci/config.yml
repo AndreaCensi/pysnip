@@ -109,14 +109,14 @@ jobs:
         name: pysnip_tests
         command: |-
           set -euxo pipefail
-              mkdir -p out/test-results
-              xunit_output=$PWD/out/test-results/nose-${CIRCLE_NODE_INDEX}-pysnip_tests-xunit.xml
-              nosetests \
-                  --rednose --immediate \
-                  --cover-tests --with-coverage \
-                  --with-xunit --xunit-file=${xunit_output} \
-                  --cover-package=${COVER_PACKAGES} \
-                  pysnip_tests
+          mkdir -p out/test-results
+          xunit_output=$PWD/out/test-results/nose-${CIRCLE_NODE_INDEX}-pysnip_tests-xunit.xml
+          nosetests \
+              --rednose --immediate \
+              --cover-tests --with-coverage \
+              --with-xunit --xunit-file=${xunit_output} \
+              --cover-package=${COVER_PACKAGES} \
+              pysnip_tests
     - run:
         name: post-circle-tests
         command: |
@@ -262,8 +262,11 @@ jobs:
           fi
           mkdir -p out/test-results
           xunit_output=$PWD/out/test-results/nose-${CIRCLE_NODE_INDEX}-pysnip_tests-xunit.xml
-          nose2 --with-coverage --plugin nose2.plugins.junitxml --junit-xml --junit-xml-path ${xunit_output}
-          $TEST_MODULES
+          nose2 --with-coverage \
+              --plugin nose2.plugins.junitxml \
+              --junit-xml \
+              --junit-xml-path ${xunit_output} \
+              $TEST_MODULES
           # TODO: cover packages
     - run:
         name: post-circle-tests
@@ -304,4 +307,4 @@ jobs:
           ./codecov -t ${CODECOV_TOKEN}
     resource_class: small
 
-# sigil 5935b3027b8364687553a8ed4e2cba78
+# sigil 20198c40fc327849de7c4dfff96408af
