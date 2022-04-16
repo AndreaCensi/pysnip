@@ -21,7 +21,7 @@ jobs:
       COVER_PACKAGES: pysnip,pysnip_tests
       TEST_PACKAGES: pysnip_tests
     docker:
-    - image: ${DOCKER_REGISTRY}/zupermind/z7-stage-zuper-ci-3.10:z7
+    - image: ${DOCKER_REGISTRY}/${DOCKER_TARGET_ORG}/${DOCKER_REPO_PREFIX}zuper-ci-3.10:${Z_DISTRO}
       auth:
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
@@ -164,4 +164,4 @@ jobs:
           ./codecov -t ${CODECOV_TOKEN}
     resource_class: small
 
-# sigil eae902ae1dd974a50c0a553b78f23d2b
+# sigil 0882b1d30be299ae578c457db92b3213
