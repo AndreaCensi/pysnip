@@ -107,7 +107,7 @@ jobs:
 
     - run:
         name: pysnip_tests
-        command: |-
+        command: |
           set -euxo pipefail
           TEST_MODULES=$(circleci tests split <.circleci/pysnip_tests.tests)
           echo "TEST_MODULES=[$TEST_MODULES]"
@@ -164,4 +164,4 @@ jobs:
           ./codecov -t ${CODECOV_TOKEN}
     resource_class: small
 
-# sigil 0882b1d30be299ae578c457db92b3213
+# sigil ab969a692e511180247f8a6e1fe0ecd6
