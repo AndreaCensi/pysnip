@@ -3,6 +3,7 @@ import os
 
 from compmake import ContextImp, StorageFilesystem
 from zuper_commons.cmds import ExitCode
+from zuper_utils_asyncio import MyAsyncExitStack
 from zuper_zapp import zapp1, ZappEnv
 from . import pysnip_make
 from ..utils import CmdOptionParser
@@ -28,16 +29,17 @@ async def pysnip_make_main(ze: ZappEnv) -> ExitCode:
     d = options.snippets_dir
     dirname = os.path.join(d, "compmake")
     db = StorageFilesystem(dirname, compress=True)
-    context = ContextImp(db=db)
-    await context.init(sti)
 
-    pysnip_make(context, db, d)
-    await asyncio.sleep(4)
-    if options.command:
-        return await context.batch_command(sti, options.command)
-    else:
-        await context.compmake_console(sti)
-    return ExitCode.OK
+    async with MyAsyncExitStack(sti) as AES:
+        context = await AES.init(ContextImp(db=db))
+
+        pysnip_make(context, db, d)
+        await asyncio.sleep(4)
+        if options.command:
+            return await context.batch_command(sti, options.command)
+        else:
+            await context.compmake_console(sti)
+        return ExitCode.OK
 
 
 #
