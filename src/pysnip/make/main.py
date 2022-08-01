@@ -31,7 +31,7 @@ async def pysnip_make_main(ze: ZappEnv) -> ExitCode:
     db = StorageFilesystem(dirname, compress=True)
 
     async with MyAsyncExitStack(sti) as AES:
-        context = await AES.init(ContextImp(db=db))
+        context = await AES.init(ContextImp(db=db, name="pysnip"))
 
         pysnip_make(context, db, d)
         await asyncio.sleep(4)
