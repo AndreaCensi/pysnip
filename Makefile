@@ -11,14 +11,6 @@ bump:
 upload:
 	zuper-cli upload
 
-upload-old:
-	rm -f dist/*
-	rm -rf src/*.egg-info
-	python3 setup.py sdist
-	devpi use $(TWINE_REPOSITORY_URL)
-	devpi login $(TWINE_USERNAME) --password $(TWINE_PASSWORD)
-	devpi upload --verbose dist/*
-
 black:
 	black -l 110 --target-version py310 src
 
@@ -48,8 +40,6 @@ install-testing-deps:
 		codecov\
 		sphinx\
 		sphinx-rtd-theme
-
-pack::
 cover_packages=pysnip,pysnip.make,pysnip.utils,pysnip_tests,pysnip_tests.test1
 
 # PROJECT_ROOT ?= /project
@@ -103,4 +93,4 @@ docs:
 
 -include extra.mk
 
-# sigil c4174cde306aec8befeb6f86843594ea
+# sigil 7e7b82192d1661b8d405d5f7f1ef3b4f
