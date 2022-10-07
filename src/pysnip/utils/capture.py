@@ -1,7 +1,7 @@
 import logging
 from contextlib import contextmanager
 
-from compmake.utils.capture import OutputCapture
+from compmake_utils.capture import OutputCapture
 
 
 class Capture:
