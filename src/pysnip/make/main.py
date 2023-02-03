@@ -28,12 +28,12 @@ async def pysnip_make_main(ze: ZappEnv) -> ExitCode:
     options = parser.parse_options()
     d = options.snippets_dir
     dirname = os.path.join(d, "compmake")
-    db = StorageFilesystem(dirname, compress=True)
+    # db = StorageFilesystem(dirname, compress=True)
 
     async with MyAsyncExitStack(sti) as AES:
-        context = await AES.init(ContextImp(db=db, name="pysnip"))
+        context = await AES.init(ContextImp(db=dirname, name="pysnip"))
 
-        pysnip_make(context, db, d)
+        pysnip_make(context, context.compmake_db, d)
         await asyncio.sleep(4)
         if options.command:
             return await context.batch_command(sti, options.command)
