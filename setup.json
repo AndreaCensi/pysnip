@@ -18,7 +18,14 @@
   "modules": [
     "pysnip",
     "pysnip.make",
-    "pysnip.utils"
+    "pysnip.make.job",
+    "pysnip.make.main",
+    "pysnip.make.meat",
+    "pysnip.utils",
+    "pysnip.utils.capture",
+    "pysnip.utils.lenient_option_parser",
+    "pysnip.utils.script_utils",
+    "pysnip.write_source"
   ],
   "version": "7.2",
   "author": "Andrea Censi",
