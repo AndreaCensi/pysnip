@@ -15,10 +15,22 @@
   },
   "zip_safe": true,
   "include_package_data": true,
-  "modules": [
+  "packages": [
     "pysnip",
     "pysnip.make",
     "pysnip.utils"
+  ],
+  "py_modules": [
+    "pysnip",
+    "pysnip.make",
+    "pysnip.make.job",
+    "pysnip.make.main",
+    "pysnip.make.meat",
+    "pysnip.utils",
+    "pysnip.utils.capture",
+    "pysnip.utils.lenient_option_parser",
+    "pysnip.utils.script_utils",
+    "pysnip.write_source"
   ],
   "version": "7.2",
   "author": "Andrea Censi",
