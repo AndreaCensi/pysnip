@@ -15,7 +15,7 @@
   },
   "zip_safe": true,
   "include_package_data": true,
-  "packages": [
+  "modules": [
     "pysnip",
     "pysnip.make",
     "pysnip.utils"
