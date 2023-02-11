@@ -1,0 +1,20 @@
+[project]
+name = "PySnip-z7"
+version = "7.2"
+authors = [{name = "Andrea Censi", email = "info@zupermind.com"}]
+dependencies = ["compmake-z7", "zuper-commons-z7", "zuper-zapp-z7", "zuper-utils-asyncio-z7"]
+
+[project.scripts]
+pysnip-make = "pysnip.make:pysnip_make_main"
+
+[tool]
+[tool.poetry]
+name = "PySnip-z7"
+version = "7.2"
+description = ""
+authors = ["Andrea Censi <info@zupermind.com>"]
+packages = [{include = "pysnip", from = "src"}, {include = "pysnip/make", from = "src"}, {include = "pysnip/utils", from = "src"}]
+
+[tool.setuptools]
+packages = ["pysnip", "pysnip.make", "pysnip.utils"]
+package-dir = {"" = "src"}
