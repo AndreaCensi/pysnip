@@ -1,7 +1,7 @@
 import asyncio
 import os
 
-from compmake import ContextImp, StorageFilesystem
+from compmake import ContextImp
 from zuper_commons.cmds import ExitCode
 from zuper_utils_asyncio import MyAsyncExitStack
 from zuper_zapp import zapp1, ZappEnv
