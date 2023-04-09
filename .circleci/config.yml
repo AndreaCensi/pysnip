@@ -68,7 +68,7 @@ jobs:
         command: |
           export PIP_INDEX_URL="${PIP_INDEX_URL_SRC}"
           echo PIP_INDEX_URL="${PIP_INDEX_URL}"
-          pipdeptree | tee  build-stats/pipdeptree.txt
+          pipdeptree >  build-stats/pipdeptree.txt
           python3 -m pip  list   | sort | tee  build-stats/pip-list.txt
           python3 -m pip  freeze | sort | tee  build-stats/pip-freeze.txt
           python3 -m pip cache list | tee  build-stats/pip-cache.txt
@@ -127,7 +127,7 @@ jobs:
           export PIP_INDEX_URL="${PIP_INDEX_URL_SRC}"
           echo PIP_INDEX_URL="${PIP_INDEX_URL}"
           set -euxo pipefail
-          TEST_MODULES=$(circleci tests split <.circleci/pysnip_tests.tests)
+          TEST_MODULES=$(split-tests <.circleci/pysnip_tests.tests)
           echo "TEST_MODULES=[$TEST_MODULES]"
           if [ -z "$TEST_MODULES" ]; then
             echo "\$TEST_MODULES is empty"
@@ -232,7 +232,7 @@ jobs:
         command: |
           export PIP_INDEX_URL="${PIP_INDEX_URL_BIN}"
           echo PIP_INDEX_URL="${PIP_INDEX_URL}"
-          pipdeptree | tee  build-stats/pipdeptree.txt
+          pipdeptree >  build-stats/pipdeptree.txt
           python3 -m pip  list   | sort | tee  build-stats/pip-list.txt
           python3 -m pip  freeze | sort | tee  build-stats/pip-freeze.txt
           python3 -m pip cache list | tee  build-stats/pip-cache.txt
@@ -291,7 +291,7 @@ jobs:
           export PIP_INDEX_URL="${PIP_INDEX_URL_BIN}"
           echo PIP_INDEX_URL="${PIP_INDEX_URL}"
           set -euxo pipefail
-          TEST_MODULES=$(circleci tests split <.circleci/pysnip_tests.tests)
+          TEST_MODULES=$(split-tests <.circleci/pysnip_tests.tests)
           echo "TEST_MODULES=[$TEST_MODULES]"
           if [ -z "$TEST_MODULES" ]; then
             echo "\$TEST_MODULES is empty"
@@ -396,7 +396,7 @@ jobs:
         command: |
           export PIP_INDEX_URL="${PIP_INDEX_URL_SRC}"
           echo PIP_INDEX_URL="${PIP_INDEX_URL}"
-          pipdeptree | tee  build-stats/pipdeptree.txt
+          pipdeptree >  build-stats/pipdeptree.txt
           python3 -m pip  list   | sort | tee  build-stats/pip-list.txt
           python3 -m pip  freeze | sort | tee  build-stats/pip-freeze.txt
           python3 -m pip cache list | tee  build-stats/pip-cache.txt
@@ -455,7 +455,7 @@ jobs:
           export PIP_INDEX_URL="${PIP_INDEX_URL_SRC}"
           echo PIP_INDEX_URL="${PIP_INDEX_URL}"
           set -euxo pipefail
-          TEST_MODULES=$(circleci tests split <.circleci/pysnip_tests.tests)
+          TEST_MODULES=$(split-tests <.circleci/pysnip_tests.tests)
           echo "TEST_MODULES=[$TEST_MODULES]"
           if [ -z "$TEST_MODULES" ]; then
             echo "\$TEST_MODULES is empty"
@@ -560,7 +560,7 @@ jobs:
         command: |
           export PIP_INDEX_URL="${PIP_INDEX_URL_BIN}"
           echo PIP_INDEX_URL="${PIP_INDEX_URL}"
-          pipdeptree | tee  build-stats/pipdeptree.txt
+          pipdeptree >  build-stats/pipdeptree.txt
           python3 -m pip  list   | sort | tee  build-stats/pip-list.txt
           python3 -m pip  freeze | sort | tee  build-stats/pip-freeze.txt
           python3 -m pip cache list | tee  build-stats/pip-cache.txt
@@ -619,7 +619,7 @@ jobs:
           export PIP_INDEX_URL="${PIP_INDEX_URL_BIN}"
           echo PIP_INDEX_URL="${PIP_INDEX_URL}"
           set -euxo pipefail
-          TEST_MODULES=$(circleci tests split <.circleci/pysnip_tests.tests)
+          TEST_MODULES=$(split-tests <.circleci/pysnip_tests.tests)
           echo "TEST_MODULES=[$TEST_MODULES]"
           if [ -z "$TEST_MODULES" ]; then
             echo "\$TEST_MODULES is empty"
@@ -673,4 +673,4 @@ jobs:
           ./codecov  
     resource_class: small
 
-# sigil d8934fcae1cd639fd3429489bbc5c528
+# sigil 93f7558f1cdb3213cf076dc2d0f723ad
