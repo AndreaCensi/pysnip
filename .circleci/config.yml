@@ -17,8 +17,6 @@ workflows:
         context: << pipeline.parameters.context_name >>
 jobs:
   test-310-src:
-    #    machine: true
-    #    resource_class: zuper-ci-ns/my-resource-class
     environment:
       COLUMNS: '160'
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -39,8 +37,7 @@ jobs:
         name: Build statistics
         command: |
           mkdir -p build-stats
-          # env | sort | tee  build-stats/env.txt
-          env | sort
+          env | sort  >  build-stats/env.txt
     - store_artifacts:
         path: build-stats
         destination: build-stats
@@ -72,6 +69,7 @@ jobs:
           python3 -m pip  list   | sort | tee  build-stats/pip-list.txt
           python3 -m pip  freeze | sort | tee  build-stats/pip-freeze.txt
           python3 -m pip cache list | tee  build-stats/pip-cache.txt
+
 
     - store_artifacts:
         path: build-stats
@@ -181,8 +179,6 @@ jobs:
           ./codecov  
     resource_class: small
   test-310-bin:
-    #    machine: true
-    #    resource_class: zuper-ci-ns/my-resource-class
     environment:
       COLUMNS: '160'
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -203,8 +199,7 @@ jobs:
         name: Build statistics
         command: |
           mkdir -p build-stats
-          # env | sort | tee  build-stats/env.txt
-          env | sort
+          env | sort  >  build-stats/env.txt
     - store_artifacts:
         path: build-stats
         destination: build-stats
@@ -236,6 +231,7 @@ jobs:
           python3 -m pip  list   | sort | tee  build-stats/pip-list.txt
           python3 -m pip  freeze | sort | tee  build-stats/pip-freeze.txt
           python3 -m pip cache list | tee  build-stats/pip-cache.txt
+
 
     - store_artifacts:
         path: build-stats
@@ -345,8 +341,6 @@ jobs:
           ./codecov  
     resource_class: small
   test-311-src:
-    #    machine: true
-    #    resource_class: zuper-ci-ns/my-resource-class
     environment:
       COLUMNS: '160'
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -367,8 +361,7 @@ jobs:
         name: Build statistics
         command: |
           mkdir -p build-stats
-          # env | sort | tee  build-stats/env.txt
-          env | sort
+          env | sort  >  build-stats/env.txt
     - store_artifacts:
         path: build-stats
         destination: build-stats
@@ -400,6 +393,7 @@ jobs:
           python3 -m pip  list   | sort | tee  build-stats/pip-list.txt
           python3 -m pip  freeze | sort | tee  build-stats/pip-freeze.txt
           python3 -m pip cache list | tee  build-stats/pip-cache.txt
+
 
     - store_artifacts:
         path: build-stats
@@ -509,8 +503,6 @@ jobs:
           ./codecov  
     resource_class: small
   test-311-bin:
-    #    machine: true
-    #    resource_class: zuper-ci-ns/my-resource-class
     environment:
       COLUMNS: '160'
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -531,8 +523,7 @@ jobs:
         name: Build statistics
         command: |
           mkdir -p build-stats
-          # env | sort | tee  build-stats/env.txt
-          env | sort
+          env | sort  >  build-stats/env.txt
     - store_artifacts:
         path: build-stats
         destination: build-stats
@@ -564,6 +555,7 @@ jobs:
           python3 -m pip  list   | sort | tee  build-stats/pip-list.txt
           python3 -m pip  freeze | sort | tee  build-stats/pip-freeze.txt
           python3 -m pip cache list | tee  build-stats/pip-cache.txt
+
 
     - store_artifacts:
         path: build-stats
@@ -673,4 +665,4 @@ jobs:
           ./codecov  
     resource_class: small
 
-# sigil 93f7558f1cdb3213cf076dc2d0f723ad
+# sigil d69a34196cb6df29ff6a33d4beb43e7a
