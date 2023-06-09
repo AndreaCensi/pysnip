@@ -10,7 +10,7 @@ dependencies = [
     ]
 
 [project.scripts]
-pysnip-make = "pysnip.make:pysnip_make_main"
+pysnip-make = "pysnip:pysnip_make_main"
 
 [tool]
 [tool.poetry]
@@ -20,14 +20,10 @@ description = ""
 authors = ["Andrea Censi <AndreaCensi@users.noreply.github.com>"]
 packages = [
     {from = "src", include = "pysnip"},
-    {from = "src", include = "pysnip/make"},
-    {from = "src", include = "pysnip/utils"},
     ]
 
 [tool.setuptools]
 packages = [
     "pysnip",
-    "pysnip.make",
-    "pysnip.utils",
     ]
 package-dir = {"" = "src"}

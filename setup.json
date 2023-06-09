@@ -10,26 +10,22 @@
   "package_name": "PySnip-z7",
   "entry_points": {
     "console_scripts": [
-      "pysnip-make = pysnip.make:pysnip_make_main"
+      "pysnip-make = pysnip:pysnip_make_main"
     ]
   },
   "zip_safe": true,
   "include_package_data": true,
   "packages": [
-    "pysnip",
-    "pysnip.make",
-    "pysnip.utils"
+    "pysnip"
   ],
   "py_modules": [
     "pysnip",
-    "pysnip.make",
-    "pysnip.make.job",
-    "pysnip.make.main",
-    "pysnip.make.meat",
-    "pysnip.utils",
-    "pysnip.utils.capture",
-    "pysnip.utils.lenient_option_parser",
-    "pysnip.utils.script_utils",
+    "pysnip.capture",
+    "pysnip.job",
+    "pysnip.lenient_option_parser",
+    "pysnip.main",
+    "pysnip.meat",
+    "pysnip.script_utils",
     "pysnip.write_source"
   ],
   "version": "7.2",

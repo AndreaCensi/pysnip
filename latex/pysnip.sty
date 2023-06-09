@@ -4,6 +4,8 @@
 \RequirePackage{etoolbox}
 \RequirePackage{verbatim}
 \RequirePackage{color}
+\RequirePackage{currfile}
+\RequirePackage{xcolor}
 
 % Directory containing the snippets
 \def\snippetsdir{snippets}
@@ -36,7 +38,7 @@
         }{
             % Some problems
             \pyfailed{\prefix}{}{\rc}%
-        }   
+        }
     }{\pynotready{\prefix}}
     \immediate\stepcounter{@PythonEnvironmentCounter}%
 }
@@ -44,15 +46,15 @@
 
 % Warn that snippet is not ready
 \newcommand{\pynotready}[1]{%
-    % #1: outname 
+    % #1: outname
     {\color[rgb]{0.5,1,0}(Snippet \texttt{#1} not executed yet)}
 }
 
 % Warn that snippet failed
 \newcommand{\pyfailed}[3]{%
-    % #1: outname 
+    % #1: outname
     % #2: python string
-    % #3: rc code 
+    % #3: rc code
     {\color{red}Snipped \texttt{#1} failed (exit code: #3)
         \begingroup
             \footnotesize
@@ -61,4 +63,3 @@
         \endgroup
     }
 }
-

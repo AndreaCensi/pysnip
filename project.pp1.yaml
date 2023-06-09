@@ -14,7 +14,7 @@ install_requires:
 tests_require: []
 
 console_scripts:
-  pysnip-make: pysnip.make:pysnip_make_main
+  pysnip-make: pysnip:pysnip_make_main
 
 
 nose:

@@ -40,7 +40,7 @@ install-testing-deps:
 		codecov\
 		sphinx\
 		sphinx-rtd-theme
-cover_packages=pysnip,pysnip.make,pysnip.utils,pysnip_tests,pysnip_tests.test1
+cover_packages=pysnip,pysnip_tests,pysnip_tests.test1
 
 # PROJECT_ROOT ?= /project
 # REGISTRY ?= docker.io
@@ -93,4 +93,4 @@ docs:
 
 -include extra.mk
 
-# sigil 7e7b82192d1661b8d405d5f7f1ef3b4f
+# sigil ab39e6002bb2151720216191d8a48f33

@@ -4,7 +4,7 @@ import traceback
 from zuper_commons.fs import write_ustring_to_utf8_file
 from zuper_commons.text import remove_escapes
 from . import logger
-from ..utils import Capture
+from .capture import Capture
 
 # States of computation:
 #
@@ -73,7 +73,6 @@ class Job:
         cap = Capture(prefix=self.basename, echo_stdout=False, echo_stderr=True)
 
         try:
-
             with cap.go():
                 pycode_compiled = compile(pycode, self.pyfile, "exec")
                 eval(pycode_compiled)
