@@ -9,3 +9,11 @@ all: pysnip-manual.pdf
 clean:
 	rm -f pysnip-manual.pdf
 	rm -rf snippets/
+
+texhome=$(shell kpsewhich -var-value=TEXMFLOCAL)
+
+install:
+	mkdir -p $(texhome)
+	ln -s -f $(CURDIR)/pysnip.sty $(texhome)/tex/latex/local/pysnip.sty
+	sudo texhash
+	kpsewhich pysnip.sty

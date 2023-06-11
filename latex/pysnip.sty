@@ -4,12 +4,14 @@
 \RequirePackage{etoolbox}
 \RequirePackage{verbatim}
 \RequirePackage{color}
-\RequirePackage{currfile}
+\RequirePackage[abspath]{currfile}
 \RequirePackage{xcolor}
+\RequirePackage{ifdraft}
 
 % Directory containing the snippets
-\def\snippetsdir{snippets}
+% \providecommand{\snippetsdir}{snippets}
 
+\makeatletter
 \newwrite\@out
 \newread\@retcode
 
@@ -19,47 +21,73 @@
 
 \newcommand{\@outname}{\jobname\arabic{@PythonEnvironmentCounter}}
 
+\newcommand{\py}[2][\@outname]{%
+  \def\outdir{\snippetsdir/\currfilebase}%
+  \immediate\write18{mkdir -p \outdir}%
+  \def\pyfile{\outdir/#1.py}%
+  \def\texfile{\outdir/#1.texi}%
+  \def\errfile{\outdir/#1.err}%
+  \def\pdffile{\outdir/#1.pdf}%
+  \def\rcfile{\outdir/#1.rc}%
+  \def\pycode{#2}%
+  \immediate\openout\@out=\pyfile%
+  \immediate\write\@out{\pycode}%
+  \immediate\closeout\@out%
+  \typeout{PySnip: texfile: \texfile}%
+  \IfFileExists{\pdffile}{%
+    % \typeout{PySnip: existing pdffile: \pdffile}
+    \includegraphics{\pdffile}%! suppress = FileNotFound
+  }{%
+    % \typeout{PySnip: NOT existing pdffile: \pdffile}
+    \IfFileExists{\texfile}{%
+      \typeout{PySnip: existing texfile: \texfile}
+      \immediate\input\texfile%
+    }{
+      \typeout{PySnip: NOT existing texfile: \texfile}
 
-\newcommand{\py}[2][\@outname]{
-    \immediate\write18{mkdir -p \snippetsdir}
-    \def\pycode{#2}
-    \def\prefix{\snippetsdir/#1}
-    \immediate\openout\@out=\prefix.py%
-    \immediate\write\@out{\pycode}%
-    \immediate\closeout\@out
-    \IfFileExists{\prefix.rc}{%
+      \ifoptionfinal{
+        \PackageError{ACT4E}{We are in final mode and .texi not found: \texfile}{
+          We are in final mode but the file to be included does not exist.}
+      }{}
+      \IfFileExists{\errfile}{%
+        \IfFileExists{\rcfile}{%
         % Read the return code of the executed Python script.
-        \immediate\openin\@retcode=\prefix.rc
-        \immediate\read\@retcode to \rc
-        \immediate\closein\@retcode
-        \ifnumequal{\rc}{0}{%
-            % Everything is fine
-            \immediate\input\prefix.tex%
+          \immediate\openin\@retcode=\rcfile
+          \immediate\read\@retcode to \rc
+          \immediate\closein\@retcode
+          \pyfailed{#1}{}{\rc}{\errfile}%
         }{
-            % Some problems
-            \pyfailed{\prefix}{}{\rc}%
+          \pyfailed{#1}{}{?}{\errfile}%
         }
-    }{\pynotready{\prefix}}
-    \immediate\stepcounter{@PythonEnvironmentCounter}%
+      % Some problems
+      }{\pynotready{#1}}%
+    }
+  }
+  \immediate\stepcounter{@PythonEnvironmentCounter}%
 }
-
 
 % Warn that snippet is not ready
 \newcommand{\pynotready}[1]{%
-    % #1: outname
+% #1: outname
     {\color[rgb]{0.5,1,0}(Snippet \texttt{#1} not executed yet)}
 }
 
+
 % Warn that snippet failed
-\newcommand{\pyfailed}[3]{%
-    % #1: outname
-    % #2: python string
-    % #3: rc code
-    {\color{red}Snipped \texttt{#1} failed (exit code: #3)
-        \begingroup
-            \footnotesize
-            \color{red}
-            %\verbatiminput{\@outname.err}
-        \endgroup
-    }
+\newcommand{\pyfailed}[4]{%
+% #1: outname
+% #2: python string
+% #3: rc code
+% #4: errfile
+    {\footnotesize\color{red}Snippet \texttt{#1} failed (exit code: #3)
+    \begingroup%
+    \footnotesize%
+    \color{red}%
+%            \verbatiminput{\@outname.err}
+    \verbatiminput{#4}
+    \endgroup
+  }
 }
+
+
+\makeatother
