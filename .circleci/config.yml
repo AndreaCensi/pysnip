@@ -9,12 +9,24 @@ workflows:
     jobs:
     - test-310-src:
         context: << pipeline.parameters.context_name >>
+        filters:
+          tags:
+            ignore: /.*/
     - test-310-bin:
         context: << pipeline.parameters.context_name >>
+        filters:
+          tags:
+            ignore: /.*/
     - test-311-src:
         context: << pipeline.parameters.context_name >>
+        filters:
+          tags:
+            ignore: /.*/
     - test-311-bin:
         context: << pipeline.parameters.context_name >>
+        filters:
+          tags:
+            ignore: /.*/
 jobs:
   test-310-src:
     environment:
@@ -745,4 +757,4 @@ jobs:
           ./codecov  
     resource_class: small
 
-# sigil 15ae7208780de82d73f18ac92b816792
+# sigil 07386d8261aa970408beab1d3ff5eb38
