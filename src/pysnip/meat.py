@@ -3,17 +3,18 @@ from glob import glob
 from typing import cast
 
 from compmake import (
-    Cache,
     CMJobID,
+    Cache,
     Context,
+    StorageFilesystem,
     get_job_cache,
     job_exists,
+    mark_as_done,
     mark_as_failed,
-    StorageFilesystem,
+    mark_as_notstarted,
 )
-from compmake.actions import mark_as_done, mark_as_notstarted
 from zuper_commons.fs import DirPath
-from . import DONE_NEEDSUPDATE, DONE_UPTODATE, FAILED, Job, logger, NOTSTARTED
+from .job import DONE_NEEDSUPDATE, DONE_UPTODATE, FAILED, Job, NOTSTARTED, logger
 
 
 def run_job(job: Job) -> None:

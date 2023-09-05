@@ -31,7 +31,7 @@ class Job:
         self.status = self.find_status()
         assert self.status in allStatus
 
-    def find_status(self):
+    def find_status(self) -> int:
         self.rcfile = os.path.join(self.dirname, "%s.rc" % self.basename)
         self.texfile = os.path.join(self.dirname, "%s.texi" % self.basename)
         self.pyfile = os.path.join(self.dirname, "%s.py" % self.basename)

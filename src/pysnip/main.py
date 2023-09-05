@@ -34,7 +34,7 @@ async def pysnip_make_main(ze: ZappEnv) -> ExitCode:
         context = await AES.init(ContextImp(db=dirname, name="pysnip"))
 
         pysnip_make(context, context.compmake_db, d)
-        await asyncio.sleep(4)
+        await asyncio.sleep(1)
         if options.command:
             return await context.batch_command(sti, options.command)
         else:
