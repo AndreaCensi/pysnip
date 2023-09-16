@@ -74,8 +74,15 @@ class Job:
 
         try:
             with cap.go():
+                PYSNIP_BASENAME = os.path.join(self.dirname, self.basename)
+                pass_locals = {
+                    "PYSNIP_DIR": self.dirname,
+                    "PYSNIP_BASENAME": PYSNIP_BASENAME,
+                }
+
                 pycode_compiled = compile(pycode, self.pyfile, "exec")
-                eval(pycode_compiled)
+
+                eval(pycode_compiled, globals(), pass_locals)
 
             write_to_file(self.texfile, cap.get_logged_stdout())
             write_to_file(self.pyofile, pycode)
