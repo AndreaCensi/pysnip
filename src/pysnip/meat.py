@@ -37,6 +37,7 @@ def pysnip_make(c: Context, db: StorageFilesystem, dirname: DirPath):
     for filename in sorted(files):
         d = os.path.dirname(filename)
         dirs.add(d)
+        # Get last modification time of *directory*
         dtime = get_last_mtime(d)
         mtime = os.stat(filename).st_mtime
         delta = dtime - mtime
