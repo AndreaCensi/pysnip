@@ -55,13 +55,13 @@
       \IfFileExists{\errfile}{%
         \IfFileExists{\rcfile}{%
         % Read the return code of the executed Python script.
-          \immediate\openin\@retcode=\rcfile
-          \immediate\read\@retcode to \rc
-          \immediate\closein\@retcode
+          \immediate\openin\@retcode=\rcfile%
+          \immediate\read\@retcode to \rc%
+          \immediate\closein\@retcode%
           \pyfailed{#1}{}{\rc}{\errfile}%
-        }{
+        }{%
           \pyfailed{#1}{}{?}{\errfile}%
-        }
+        }%
       % Some problems
       }{\pynotready{#1}}%
     }%
@@ -82,14 +82,14 @@
 % #2: python string
 % #3: rc code
 % #4: errfile
-    {\footnotesize\color{red}Snippet \texttt{#1} failed (exit code: #3)
+    {\footnotesize\color{red}Snippet \texttt{#1} failed (exit code: #3)%
     \begingroup%
     \footnotesize%
     \color{red}%
 %            \verbatiminput{\@outname.err}
-    \verbatiminput{#4}
-    \endgroup
-  }
+    \verbatiminput{#4}%
+    \endgroup%
+  }%
 }
 
 \renewcommand{\pyfailed}[4]{!}
