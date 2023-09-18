@@ -1,8 +1,8 @@
 import os
 import traceback
 
-from zuper_commons.fs import write_ustring_to_utf8_file
-from zuper_commons.text import remove_escapes
+from zuper_commons.fs import read_bytes_from_file, write_ustring_to_utf8_file
+from zuper_commons.text import get_md5, remove_escapes
 from . import logger
 from .capture import Capture
 
@@ -61,6 +61,22 @@ class Job:
         # (prevents returns)
 
         uptodate = os.path.exists(self.pyofile) and (contents(self.pyofile) == contents(self.pyfile))
+
+        with open(self.texfile) as f:
+            texcontent = f.read()
+
+        first_line = texcontent.split("\n")[0]
+        if first_line.startswith("% md5 "):
+            rest_line = first_line[len("% md5 ") :]
+            md5, dependency = rest_line.split(" ")
+            if os.path.exists(dependency):
+                dependency_contents = read_bytes_from_file(dependency)
+                found_md5 = get_md5(dependency_contents)
+                if md5 != found_md5:
+                    logger.warning(
+                        "Dependency changed, forcing update", dependency=dependency, first_line=first_line, found_md5=found_md5
+                    )
+                    uptodate = False
 
         if uptodate:
             return DONE_UPTODATE
