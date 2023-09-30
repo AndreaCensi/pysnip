@@ -3,17 +3,18 @@ from glob import glob
 from typing import cast
 
 from compmake import (
-    Cache,
     CMJobID,
+    Cache,
     Context,
+    StorageFilesystem,
     get_job_cache,
     job_exists,
+    mark_as_done,
     mark_as_failed,
-    StorageFilesystem,
+    mark_as_notstarted,
 )
-from compmake.actions import mark_as_done, mark_as_notstarted
 from zuper_commons.fs import DirPath
-from . import DONE_NEEDSUPDATE, DONE_UPTODATE, FAILED, Job, logger, NOTSTARTED
+from .job import DONE_NEEDSUPDATE, DONE_UPTODATE, FAILED, Job, NOTSTARTED, logger
 
 
 def run_job(job: Job) -> None:
@@ -26,16 +27,17 @@ def get_last_mtime(d: DirPath):
 
 
 def pysnip_make(c: Context, db: StorageFilesystem, dirname: DirPath):
-    files = glob(os.path.join(dirname, "**/*.py"))
+    files = glob(os.path.join(dirname, "**/*.py"), recursive=True)
     # prefixes = [os.path.splitext(os.path.basename(f))[0] for f in files]
-    logger.info(f"Found {len(files)} snippets in directory {dirname}")
+    logger.info(f"Found {len(files)} snippets in directory {dirname!r}")
 
     # use_filesystem(os.path.join(dirname, ".compmake"))
     dirs = set()
     ntodo = 0
-    for filename in files:
+    for filename in sorted(files):
         d = os.path.dirname(filename)
         dirs.add(d)
+        # Get last modification time of *directory*
         dtime = get_last_mtime(d)
         mtime = os.stat(filename).st_mtime
         delta = dtime - mtime

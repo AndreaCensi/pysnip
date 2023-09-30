@@ -1,8 +1,8 @@
 import os
 import traceback
 
-from zuper_commons.fs import write_ustring_to_utf8_file
-from zuper_commons.text import remove_escapes
+from zuper_commons.fs import read_bytes_from_file, write_ustring_to_utf8_file
+from zuper_commons.text import get_md5, remove_escapes
 from . import logger
 from .capture import Capture
 
@@ -31,7 +31,7 @@ class Job:
         self.status = self.find_status()
         assert self.status in allStatus
 
-    def find_status(self):
+    def find_status(self) -> int:
         self.rcfile = os.path.join(self.dirname, "%s.rc" % self.basename)
         self.texfile = os.path.join(self.dirname, "%s.texi" % self.basename)
         self.pyfile = os.path.join(self.dirname, "%s.py" % self.basename)
@@ -62,6 +62,22 @@ class Job:
 
         uptodate = os.path.exists(self.pyofile) and (contents(self.pyofile) == contents(self.pyfile))
 
+        with open(self.texfile) as f:
+            texcontent = f.read()
+
+        first_line = texcontent.split("\n")[0]
+        if first_line.startswith("% md5 "):
+            rest_line = first_line[len("% md5 ") :]
+            md5, dependency = rest_line.split(" ")
+            if os.path.exists(dependency):
+                dependency_contents = read_bytes_from_file(dependency)
+                found_md5 = get_md5(dependency_contents)
+                if md5 != found_md5:
+                    logger.warning(
+                        "Dependency changed, forcing update", dependency=dependency, first_line=first_line, found_md5=found_md5
+                    )
+                    uptodate = False
+
         if uptodate:
             return DONE_UPTODATE
         else:
@@ -74,8 +90,15 @@ class Job:
 
         try:
             with cap.go():
+                PYSNIP_BASENAME = os.path.join(self.dirname, self.basename)
+                pass_locals = {
+                    "PYSNIP_DIR": self.dirname,
+                    "PYSNIP_BASENAME": PYSNIP_BASENAME,
+                }
+
                 pycode_compiled = compile(pycode, self.pyfile, "exec")
-                eval(pycode_compiled)
+
+                eval(pycode_compiled, globals(), pass_locals)
 
             write_to_file(self.texfile, cap.get_logged_stdout())
             write_to_file(self.pyofile, pycode)
