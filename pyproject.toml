@@ -22,8 +22,16 @@ packages = [
     {from = "src", include = "pysnip"},
     ]
 
+[tool.poetry.scripts]
+pysnip-make = "pysnip:pysnip_make_main"
+
 [tool.setuptools]
 packages = [
     "pysnip",
     ]
 package-dir = {"" = "src"}
+
+[build-system]
+requires = [
+    "poetry-core>=1.0.0",]
+build-backend = "poetry.core.masonry.api"
