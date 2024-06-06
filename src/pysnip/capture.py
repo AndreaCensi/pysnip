@@ -13,7 +13,6 @@ class Capture:
 
     def start(self):
         self.capture = OutputCapture(
-            None,
             prefix=self.prefix,
             echo_stdout=self.echo_stdout,
             echo_stderr=self.echo_stderr,
