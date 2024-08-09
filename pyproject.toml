@@ -2,6 +2,11 @@
 name = "PySnip-z7"
 version = "7.2"
 authors = [{name = "Andrea Censi", email = "AndreaCensi@users.noreply.github.com"}]
+dependencies = [
+    "compmake-z7",
+    "zuper-commons-z7",
+    "zuper-utils-asyncio-z7",
+    "zuper-zapp-z7",]
 
 [tool.poetry]
 name = "PySnip-z7"
@@ -19,6 +24,7 @@ zuper-utils-asyncio-z7 = "*"
 zuper-zapp-z7 = "*"
 
 [tool.poetry.group.test.dependencies]
+python = "^3.12"
 
 [tool.poetry.scripts]
 pysnip-make = "pysnip:pysnip_make_main"
