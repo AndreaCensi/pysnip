@@ -8,18 +8,18 @@ workflows:
   version: 2
   test:
     jobs:
-    - test-311-src:
+    - test-312-src:
         context: <<pipeline.parameters.context_name>>
         filters:
           tags:
             ignore: /.*/
-    - test-311-bin:
+    - test-312-bin:
         context: <<pipeline.parameters.context_name>>
         filters:
           tags:
             ignore: /.*/
 jobs:
-  test-311-src:
+  test-312-src:
     environment:
       COLUMNS: '160'
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -30,7 +30,7 @@ jobs:
       COVER_PACKAGES: pysnip,pysnip_tests
       TEST_PACKAGES: pysnip_tests
     docker:
-    - image: docker.io/${DOCKER_TARGET_ORG}/${DOCKER_REPO_PREFIX}zuper-ci-3.11:${Z_DISTRO}
+    - image: docker.io/${DOCKER_TARGET_ORG}/${DOCKER_REPO_PREFIX}zuper-ci-3.12:${Z_DISTRO}
       # auth:
       #   username: $DOCKER_USERNAME
       #   password: $DOCKER_PASSWORD
@@ -210,7 +210,7 @@ jobs:
           chmod +x codecov || true
           timeout 1m ./codecov || true
     resource_class: small
-  test-311-bin:
+  test-312-bin:
     environment:
       COLUMNS: '160'
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -221,7 +221,7 @@ jobs:
       COVER_PACKAGES: pysnip,pysnip_tests
       TEST_PACKAGES: pysnip_tests
     docker:
-    - image: docker.io/${DOCKER_TARGET_ORG}/${DOCKER_REPO_PREFIX}zuper-ci-3.11:${Z_DISTRO}
+    - image: docker.io/${DOCKER_TARGET_ORG}/${DOCKER_REPO_PREFIX}zuper-ci-3.12:${Z_DISTRO}
       # auth:
       #   username: $DOCKER_USERNAME
       #   password: $DOCKER_PASSWORD
@@ -402,4 +402,4 @@ jobs:
           timeout 1m ./codecov || true
     resource_class: small
 
-# sigil 84ff8e1c379ca0f145a47e0cf0a8a1cb
+# sigil 2898bfed312d79e19630301da2878a72
