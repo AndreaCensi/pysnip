@@ -8,6 +8,13 @@ dependencies = [
     "zuper-utils-asyncio-z7",
     "zuper-zapp-z7",]
 
+[project.scripts]
+pysnip-make = "pysnip:pysnip_make_main"
+
+[project.optional-dependencies]
+test = [
+    ]
+
 [tool.poetry]
 name = "PySnip-z7"
 version = "7.2"
@@ -24,7 +31,7 @@ zuper-utils-asyncio-z7 = "*"
 zuper-zapp-z7 = "*"
 
 [tool.poetry.group.test.dependencies]
-python = "^3.12"
+python = ">=3.12"
 
 [tool.poetry.scripts]
 pysnip-make = "pysnip:pysnip_make_main"
