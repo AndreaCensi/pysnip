@@ -1,8 +1,11 @@
 import os
 import traceback
 
-from zuper_commons.fs import read_bytes_from_file, write_ustring_to_utf8_file
-from zuper_commons.text import get_md5, remove_escapes
+from zuper_commons.fs import read_bytes_from_file
+from zuper_commons.fs import write_ustring_to_utf8_file
+from zuper_commons.text import get_md5
+from zuper_commons.text import remove_escapes
+
 from . import logger
 from .capture import Capture
 

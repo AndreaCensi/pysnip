@@ -1,7 +1,8 @@
-from .script_utils import UserError
-from optparse import IndentedHelpFormatter
 import optparse
 import sys
+from optparse import IndentedHelpFormatter
+
+from .script_utils import UserError
 
 
 class LenientOptionParser(optparse.OptionParser):

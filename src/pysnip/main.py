@@ -4,9 +4,11 @@ import os
 from compmake import ContextImp
 from zuper_commons.cmds import ExitCode
 from zuper_utils_asyncio import MyAsyncExitStack
-from zuper_zapp import zapp1, ZappEnv
-from .meat import pysnip_make
+from zuper_zapp import ZappEnv
+from zuper_zapp import zapp1
+
 from .lenient_option_parser import CmdOptionParser
+from .meat import pysnip_make
 
 
 @zapp1()
