@@ -137,4 +137,5 @@ def delete_if_exists(x):
 
 
 def contents(f):
-    return open(f).read().strip()
+    with open(f, "r") as file:
+        return file.read().strip()
