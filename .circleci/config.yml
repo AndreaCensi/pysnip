@@ -15,6 +15,7 @@ workflows:
             ignore: /.*/
 jobs:
   test-313-src:
+    max_auto_reruns: 0
     environment:
       COLUMNS: '160'
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -141,12 +142,6 @@ jobs:
           else
               echo "Target $TARGET not defined"
           fi
-    # - run:
-    #     name: Notebooks
-    #     command: |
-    #       make -C notebooks cleanup all
-
-
     - run:
         name: pysnip_tests
         command: |
@@ -207,4 +202,4 @@ jobs:
           timeout 1m ./codecov || true
     resource_class: small
 
-# sigil b01c3bb4410cbefeb0e2b2780cae0e86
+# sigil 998789835225c61294aaae2e9b684241
