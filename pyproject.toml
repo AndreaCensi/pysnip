@@ -3,19 +3,14 @@ name = "PySnip-z7"
 version = "7.2"
 readme = ""
 description = ""
-authors = [{name = "Andrea Censi", email = "AndreaCensi@users.noreply.github.com"}]
-dependencies = [
-    "compmake-z7",
-    "zuper-commons-z7",
-    "zuper-utils-asyncio-z7",
-    "zuper-zapp-z7",]
+authors = [{ name = "Andrea Censi", email = "AndreaCensi@users.noreply.github.com" }]
+dependencies = ["compmake-z7", "zuper-commons-z7", "zuper-utils-asyncio-z7", "zuper-zapp-z7"]
 
 [project.scripts]
 pysnip-make = "pysnip:pysnip_make_main"
 
 [project.optional-dependencies]
-test = [
-    ]
+test = []
 
 [tool.poetry]
 name = "PySnip-z7"
@@ -23,8 +18,8 @@ version = "7.2"
 description = ""
 authors = ["Andrea Censi <AndreaCensi@users.noreply.github.com>"]
 packages = [
-    {from = "src", include = "pysnip"},
-    ]
+    { from = "src", include = "pysnip" },
+]
 
 [tool.poetry.dependencies]
 compmake-z7 = "*"
@@ -39,6 +34,5 @@ python = ">=3.12"
 pysnip-make = "pysnip:pysnip_make_main"
 
 [build-system]
-requires = [
-    "poetry-core>=1.0.0",]
+requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
